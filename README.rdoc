@@ -1,0 +1,3 @@
+sendgrid_toolkit is a ruby wrapper around the sendgrid API.
+
+It is a work in progress!
