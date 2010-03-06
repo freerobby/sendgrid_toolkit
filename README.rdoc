@@ -1,3 +1,6 @@
-sendgrid_toolkit is a ruby wrapper around the sendgrid API.
+= sendgrid_toolkit - a Ruby wrapper for the sendgrid API!
 
 It is a work in progress!
+
+== sendgrid credentials
+By default, sendgrid_toolkit looks for SMTP_USERNAME and SMTP_PASSWORD environment variables for authenticating with sendgrid. However, you may override this by supplying the :api_user and :api_key keys to the options hash of any call

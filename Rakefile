@@ -8,7 +8,8 @@ Echoe.new('sendgrid_toolkit', '0.0.1') do |p|
   p.author = "Robby Grossman"
   p.email = "robby@freerobby.com"
   p.ignore_pattern = ["tmp/*", "script/*"]
-  p.development_dependencies = []
+  p.dependencies = ["hashie", "httparty"]
+  p.development_dependencies = ["echoe", "fakeweb", "rspec"]
 end
 
 Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each {|ext| load ext}
