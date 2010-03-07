@@ -1,15 +1,18 @@
 require 'rubygems'
 require 'rake'
-require 'echoe'
 
-Echoe.new('sendgrid_toolkit', '0.0.1') do |p|
-  p.description = "Ruby wrapper for sendgrid API"
-  p.url = "http://github.com/freerobby/sendgrid_toolkit"
-  p.author = "Robby Grossman"
-  p.email = "robby@freerobby.com"
-  p.ignore_pattern = ["tmp/*", "script/*"]
-  p.dependencies = ["hashie", "httparty"]
-  p.development_dependencies = ["echoe", "fakeweb", "rspec"]
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "sendgrid_toolkit"
+    gemspec.summary = "A Ruby wrapper and utility library for communicating with the Sendgrid API"
+    gemspec.description = "A Ruby wrapper and utility library for communicating with the Sendgrid API"
+    gemspec.email = "robby@freerobby.com"
+    gemspec.homepage = "http://github.com/freerobby/sendgrid_toolkit"
+    gemspec.authors = ["Robby Grossman"]
+  end
+rescue LoadError
+  puts "Jeweler must be installed. Use 'sudo gem install jeweler'."
 end
 
 Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each {|ext| load ext}
