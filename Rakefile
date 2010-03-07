@@ -11,6 +11,7 @@ begin
     gemspec.homepage = "http://github.com/freerobby/sendgrid_toolkit"
     gemspec.authors = ["Robby Grossman"]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler must be installed. Use 'sudo gem install jeweler'."
 end
