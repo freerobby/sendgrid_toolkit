@@ -22,6 +22,15 @@ describe SendgridToolkit do
     restore_env
   end
   
+  describe "abstract_sendgrid_client i/o" do
+    xit "throws authentication error when authentication fails" do
+      @obj = SendgridToolkit::AbstractSendgridClient.new("fakeuser", "fakepass")
+      lambda {
+        @obj.send(:api_post, "profile", "get", {})
+      }.should raise_error SendgridToolkit::AuthenticationFailed
+    end
+  end
+  
   describe "statistics i/o" do
     before do
       @obj = SendgridToolkit::Statistics.new

@@ -8,6 +8,16 @@ describe SendgridToolkit::AbstractSendgridClient do
     restore_env
   end
   
+  describe "#api_post" do
+    it "throws error when authentication fails" do
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/profile\.get\.json\?|, :body => '{"error":{"code":401,"message":"Permission denied, wrong credentials"}}')
+      @obj = SendgridToolkit::AbstractSendgridClient.new("fakeuser", "fakepass")
+      lambda {
+        @obj.send(:api_post, "profile", "get", {})
+      }.should raise_error SendgridToolkit::AuthenticationFailed
+    end
+  end
+  
   describe "#initialize" do
     it "stores api credentials when passed in" do
       ENV['SMTP_USERNAME'] = "env_username"

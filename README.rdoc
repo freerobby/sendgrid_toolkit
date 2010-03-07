@@ -15,6 +15,8 @@ Each class is initialized with +api_user+ and +api_key+ parameters. +api_user+ i
 
 If you don't supply +api_user+ or +api_key+, SendgridToolkit will look for the SMTP_USERNAME or SMTP_PASSWORD environment variables. If they are not found, SendgridToolkit will throw +NoAPIKeySpecified+ or +NoAPIUserSpecified+, depending on what you omitted.
 
+If authentication fails during an API request, SendgridToolkit throws AuthenticationFailed.
+
 == Unsubscribes Class
 
 Instantiate the Unsubscribes object:
