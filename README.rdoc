@@ -1,6 +1,101 @@
-= sendgrid_toolkit - a Ruby wrapper for the sendgrid API!
+= SendgridToolkit - a Ruby wrapper for the Sendgrid Web API
 
-It is a work in progress!
+The Statistics and Unsubscribe APIs are fully supported.
 
-== sendgrid credentials
-By default, sendgrid_toolkit looks for SMTP_USERNAME and SMTP_PASSWORD environment variables for authenticating with sendgrid. However, you may override this by supplying the :api_user and :api_key keys to the options hash of any call
+This allows you to:
+* manage your unsubscribed users
+* view API-supported email statistics.
+
+Support for Sendgrid's other Web APIs is coming soon.
+
+SendgridToolkit provides one class for each Web API module.
+
+=== A note about authentication
+Each class is initialized with +api_user+ and +api_key+ parameters. +api_user+ is your sendgrid account email address, and +api_key+ is your sendgrid password.
+
+If you don't supply +api_user+ or +api_key+, SendgridToolkit will look for the SMTP_USERNAME or SMTP_PASSWORD environment variables. If they are not found, SendgridToolkit will throw +NoAPIKeySpecified+ or +NoAPIUserSpecified+, depending on what you omitted.
+
+== Unsubscribes Class
+
+Instantiate the Unsubscribes object:
+  unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
+
+=== Listing Unsubscribes
+You can see everybody who has unsubscribed from your emails with:
+  listing = unsubscribes.retrieve
++listing+ will be an array of hashes, each of which has an +email+ key.
+
+If you want the timestamp for when each user unsubscribed, use:
+  listing = unsubscribes.retrieve_with_timestamps
+Each hash in +listing+ will now contain a +created+ key, which holds a Ruby Time object.
+
+=== Adding Unsubscribes
+To manually unsubscribe a user from your sendgrid emails, use:
+  unsubscribes.add :email => "email@to.unsubscribe"
+
+SendgridToolkit will throw +UnsubscribeEmailAlreadyExists+ if the email you specified is already on the list
+
+=== Deleting Unsubscribes
+To remove a user from your unsubscribe list, use:
+  unsubscribes.delete :email => "email@that_is.unsubscribed"
+
+SendgridToolkit will throw +UnsubscribeEmailDoesNotExist+ if the email you specified is not on the list
+
+== Statistics Class
+
+Instantiate the Statistics object:
+  statistics = SendgridToolkit::Statistics.new(api_user, api_key)
+
+=== Retrieve statistics
+To retrieve statistics, use:
+  stats = statistics.retrieve
++stats+ will be an array of hashes, each of which contains the following keys:
+* +date+: The date to which the statistics in this hash refer to
+* +requests+: The number of emails you sent
+* +bounces+: The number of users who opened your email but did not click on your links
+* +clicks+: The number of users who clicked on a link in your email
+* +opens+: The number of users who opened your email
+* +spamreports+: The number of users who have reported your emails as spam
++stats+ may also contain some keys that Sendgrid does not officially document, such as: +delivered+, +invalid_email+, +repeat_bounces+, +repeat_spamreports+, +repeat_unsubscribes+ and +unsubscribes+
+
+To narrow your retrieval to the past 5 days, you would use:
+  stats = statistics.retrieve :days => 5
+
+To narrow your retrieval to emails within the last month but before one week ago, you would use:
+  stats = statistics.retrieve :start_date => 1.month.ago, :end_date => 1.week.ago
+
+To narrow your search to a particular category (applicable only if you use this Sendgrid feature), you would use:
+  stats = statistics.retrieve :category => "NameOfYourCategory"
+Note: You may combine a category query with other options, i.e.:
+  stats = statistics.retrieve :category => "NameOfYourCategory", :days => 5
+
+=== Retrieve aggregate (all-time) statistics
+To receive your all-time statistics, use:
+  stats = statistics.retrieve_aggregate
++stats+ will be a single hash containing all of the aforementioned keys except +date+.
+
+=== List your categories
+If you use Sendgrid's category feature, you can get a listing of your categories with:
+  cats = statistics.list_categories
++cats+ is an array of hashes, each of which has a +category+ key that holds the name of a category.
+
+= Behind the Scenes
+Things you may want to know:
+
+1. API requests are made and responses are received in JSON.
+
+2. All requests are made as POSTs unless noted otherwise (Sendgrid's examples are via GET, but they support POST)
+
+3. Each class takes a final options parameter in the form of a hash. You may use this parameter to pass additional options to the Sendgrid API. For example, let's say you are using the unsubscribes function:
+  unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
+  listing = unsubscribes.retrieve
+If Sendgrid were to add a +only_verified+ option to this API call, you could call:
+  listing = unsubscribes.retrieve :only_verified => true
+to make use of it.
+
+= Testing
+In addition to unit tests, SendgridToolkit comes with a suite of "webconnect" tests that will actually hit Sendgrid's servers and perform various actions for purposes of real-world testing. In order to use these tests, you must:
+1. Create a test account with sendgrid and store the credentials in TEST_SMTP_USERNAME and TEST_SMTP_PASSWORD environment variables. This is so that actions are performed on a test account and not your real sendgrid account. If you forget, don't worry -- the tests will fail but they will not fall back on the account that uses SMTP_USERNAME and SMTP_PASSWORD.
+2. Change "xit" it "it" on the tests you wish to run.
+
+Running "spec spec" out of the box will run the standard suite of tests (all network access is stubbed out).

@@ -1,7 +1,13 @@
-$LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/../lib"))
-
 require 'fakeweb'
 require 'sendgrid_toolkit'
 require 'spec'
 
 FakeWeb.allow_net_connect = false
+
+def backup_env
+  @env_backup = Hash.new
+  ENV.keys.each {|key| @env_backup[key] = ENV[key]}
+end
+def restore_env
+  @env_backup.keys.each {|key| ENV[key] = @env_backup[key]}
+end
