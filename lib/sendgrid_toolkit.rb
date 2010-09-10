@@ -5,6 +5,7 @@ require 'sendgrid_toolkit/sendgrid_error'
 require 'sendgrid_toolkit/statistics'
 require 'sendgrid_toolkit/bounces'
 require 'sendgrid_toolkit/spam_reports'
+require 'sendgrid_toolkit/invalid_emails'
 require 'sendgrid_toolkit/unsubscribes'
 
 module SendgridToolkit

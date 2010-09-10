@@ -6,4 +6,5 @@ module SendgridToolkit
   class UnsubscribeEmailDoesNotExist < StandardError; end
   class BounceEmailDoesNotExist < StandardError; end
   class SpamReportEmailDoesNotExist < StandardError; end
+  class InvalidEmailDoesNotExist < StandardError; end
 end
