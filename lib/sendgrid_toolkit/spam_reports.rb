@@ -18,7 +18,7 @@ module SendgridToolkit
 
     def delete(options = {})
       response = api_post('spamreports', 'delete', options)
-      raise UnsubscribeEmailDoesNotExist if response['message'].include?('does not exist')
+      raise SpamReportEmailDoesNotExist if response['message'].include?('does not exist')
       response
     end
 

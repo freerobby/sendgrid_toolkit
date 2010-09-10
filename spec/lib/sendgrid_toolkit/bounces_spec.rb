@@ -39,7 +39,7 @@ describe SendgridToolkit::Bounces do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/bounces\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
-      }.should raise_error SendgridToolkit::UnsubscribeEmailDoesNotExist
+      }.should raise_error SendgridToolkit::BounceEmailDoesNotExist
     end
   end
 

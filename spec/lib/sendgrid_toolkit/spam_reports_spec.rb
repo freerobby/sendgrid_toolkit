@@ -1,6 +1,6 @@
 require File.expand_path("#{File.dirname(__FILE__)}/../../helper")
 
-describe SendgridToolkit::Bounces do
+describe SendgridToolkit::SpamReports do
   before do
     FakeWeb.clean_registry
     @obj = SendgridToolkit::SpamReports.new("fakeuser", "fakepass")
@@ -38,7 +38,7 @@ describe SendgridToolkit::Bounces do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/spamreports\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
-      }.should raise_error SendgridToolkit::UnsubscribeEmailDoesNotExist
+      }.should raise_error SendgridToolkit::SpamReportEmailDoesNotExist
     end
   end
 

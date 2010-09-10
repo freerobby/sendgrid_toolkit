@@ -18,7 +18,7 @@ module SendgridToolkit
 
     def delete(options = {})
       response = api_post('bounces', 'delete', options)
-      raise UnsubscribeEmailDoesNotExist if response['message'].include?('does not exist')
+      raise BounceEmailDoesNotExist if response['message'].include?('does not exist')
       response
     end
 
