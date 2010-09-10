@@ -5,29 +5,37 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sendgrid_toolkit}
-  s.version = "0.1.1"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
-  s.date = %q{2010-03-07}
+  s.date = %q{2010-09-10}
   s.description = %q{A Ruby wrapper and utility library for communicating with the Sendgrid API}
   s.email = %q{robby@freerobby.com}
   s.extra_rdoc_files = [
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".gitignore",
-     "README.rdoc",
+     "README.md",
      "Rakefile",
      "VERSION",
      "lib/sendgrid_toolkit.rb",
      "lib/sendgrid_toolkit/abstract_sendgrid_client.rb",
+     "lib/sendgrid_toolkit/bounces.rb",
+     "lib/sendgrid_toolkit/common.rb",
+     "lib/sendgrid_toolkit/invalid_emails.rb",
      "lib/sendgrid_toolkit/sendgrid_error.rb",
+     "lib/sendgrid_toolkit/spam_reports.rb",
      "lib/sendgrid_toolkit/statistics.rb",
      "lib/sendgrid_toolkit/unsubscribes.rb",
      "sendgrid_toolkit.gemspec",
      "spec/helper.rb",
      "spec/lib/sendgrid_toolkit/abstract_sendgrid_client_spec.rb",
+     "spec/lib/sendgrid_toolkit/bounces_spec.rb",
+     "spec/lib/sendgrid_toolkit/common_spec.rb",
+     "spec/lib/sendgrid_toolkit/invalid_emails_spec.rb",
+     "spec/lib/sendgrid_toolkit/spam_reports_spec.rb",
      "spec/lib/sendgrid_toolkit/statistics_spec.rb",
      "spec/lib/sendgrid_toolkit/unsubscribes_spec.rb",
      "spec/lib/sendgrid_toolkit_spec.rb",
@@ -36,11 +44,15 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/freerobby/sendgrid_toolkit}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A Ruby wrapper and utility library for communicating with the Sendgrid API}
   s.test_files = [
     "spec/helper.rb",
      "spec/lib/sendgrid_toolkit/abstract_sendgrid_client_spec.rb",
+     "spec/lib/sendgrid_toolkit/bounces_spec.rb",
+     "spec/lib/sendgrid_toolkit/common_spec.rb",
+     "spec/lib/sendgrid_toolkit/invalid_emails_spec.rb",
+     "spec/lib/sendgrid_toolkit/spam_reports_spec.rb",
      "spec/lib/sendgrid_toolkit/statistics_spec.rb",
      "spec/lib/sendgrid_toolkit/unsubscribes_spec.rb",
      "spec/lib/sendgrid_toolkit_spec.rb",
@@ -51,7 +63,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
     else
     end
   else
