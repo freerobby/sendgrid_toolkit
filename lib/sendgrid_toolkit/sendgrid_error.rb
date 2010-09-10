@@ -4,7 +4,5 @@ module SendgridToolkit
   class NoAPIUserSpecified < StandardError; end
   class UnsubscribeEmailAlreadyExists < StandardError; end
   class UnsubscribeEmailDoesNotExist < StandardError; end
-  class BounceEmailDoesNotExist < StandardError; end
-  class SpamReportEmailDoesNotExist < StandardError; end
-  class InvalidEmailDoesNotExist < StandardError; end
+  class EmailDoesNotExist < StandardError; end
 end

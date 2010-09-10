@@ -43,7 +43,7 @@ describe SendgridToolkit::InvalidEmails do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/invalidemails\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
-      }.should raise_error SendgridToolkit::InvalidEmailDoesNotExist
+      }.should raise_error SendgridToolkit::EmailDoesNotExist
     end
   end
 

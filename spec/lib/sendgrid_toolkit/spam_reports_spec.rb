@@ -38,7 +38,7 @@ describe SendgridToolkit::SpamReports do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/spamreports\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
-      }.should raise_error SendgridToolkit::SpamReportEmailDoesNotExist
+      }.should raise_error SendgridToolkit::EmailDoesNotExist
     end
   end
 
