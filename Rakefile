@@ -10,6 +10,9 @@ begin
     gemspec.email = "robby@freerobby.com"
     gemspec.homepage = "http://github.com/freerobby/sendgrid_toolkit"
     gemspec.authors = ["Robby Grossman"]
+    
+    gemspec.add_dependency "httparty"
+    # Development dependencies: fakeweb, rake, jeweler, rspec
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
