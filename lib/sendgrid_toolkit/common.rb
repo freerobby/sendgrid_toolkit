@@ -18,7 +18,9 @@ module SendgridToolkit
 
     def delete(options = {})
       response = api_post(module_name, 'delete', options)
-      raise EmailDoesNotExist if response['message'].include?('does not exist')
+      if !response["message"].nil?
+        raise EmailDoesNotExist if response['message'].include?('does not exist')
+      end
       response
     end
 

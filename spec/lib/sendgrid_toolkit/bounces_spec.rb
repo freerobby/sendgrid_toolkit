@@ -41,6 +41,12 @@ describe SendgridToolkit::Bounces do
         @obj.delete :email => "user@domain.com"
       }.should raise_error SendgridToolkit::EmailDoesNotExist
     end
+    it "does not choke if response does not have a 'message' field" do
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/bounces\.delete\.json\?.*email=.+|, :body => 'An internal server error occurred. Please try again later.')
+      lambda {
+        @obj.delete :email => "user@domain.com"
+      }.should_not raise_error
+    end
   end
 
 end
