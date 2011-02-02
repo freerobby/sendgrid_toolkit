@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sendgrid_toolkit}
-  s.version = "1.0.3"
+  s.version = "1.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
-  s.date = %q{2011-01-21}
+  s.date = %q{2011-02-01}
   s.description = %q{A Ruby wrapper and utility library for communicating with the Sendgrid API}
   s.email = %q{robby@freerobby.com}
   s.extra_rdoc_files = [
