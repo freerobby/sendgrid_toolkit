@@ -5,6 +5,7 @@ module SendgridToolkit
       options["X-SMTPAPI"] = options[:api_headers]
       response = api_post('mail', 'send', options)
       raise(SendEmailError, "SendMail API refused to send email: #{response["errors"].inspect}") if response["message"] == "error"
+      true
     end
   end
 end
