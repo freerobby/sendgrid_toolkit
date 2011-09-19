@@ -6,4 +6,5 @@ module SendgridToolkit
   class UnsubscribeEmailDoesNotExist < StandardError; end
   class EmailDoesNotExist < StandardError; end
   class SendgridServerError < StandardError; end
+  class APIError < StandardError; end
 end
