@@ -8,12 +8,20 @@ module SendgridToolkit
     def retrieve_aggregate(options = {})
       options.merge! :aggregate => 1
       response = retrieve options
-      %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int_field|
-        response[int_field] = response[int_field].to_i if response.has_key?(int_field)
+      if Hash === response.parsed_response
+          to_ints(response.parsed_response)
+      elsif Array === response.parsed_response
+          response.parsed_response.each {|o| to_ints(o) }
       end
       response
     end
-    
+
+    def to_ints(resp)
+      %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int_field|
+        resp[int_field] = resp[int_field].to_i if resp.has_key?(int_field)
+      end
+    end
+ 
     def list_categories(options = {})
       options.merge! :list => true
       response = retrieve options
