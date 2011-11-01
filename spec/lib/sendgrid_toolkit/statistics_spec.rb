@@ -27,6 +27,16 @@ describe SendgridToolkit::Statistics do
         stats[int].kind_of?(Integer).should == true if stats.has_key?(int) # We support all fields presently returned, but we are only testing what sendgrid officially documents
       end
     end
+    
+    it "parses aggregate statistics for array response" do
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/stats\.get\.json\?.*aggregate=1|, :body => '[{"requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5},{"requests":5,"bounces":10,"clicks":10223,"opens":9992,"spamreports":5}]')
+      stats = @obj.retrieve_aggregate
+      %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int|
+        # We support all fields presently returned, but we are only testing what sendgrid officially documents
+        stats[0][int].kind_of?(Integer).should == true if stats[0].has_key?(int)
+        stats[1][int].kind_of?(Integer).should == true if stats[1].has_key?(int)
+      end
+    end
   end
   
   describe "#list_categories" do
