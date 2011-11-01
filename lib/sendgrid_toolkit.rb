@@ -1,4 +1,3 @@
-require 'active_support/all'
 require 'httparty'
 
 require 'sendgrid_toolkit/abstract_sendgrid_client'

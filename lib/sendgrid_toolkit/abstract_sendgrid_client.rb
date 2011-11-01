@@ -5,8 +5,8 @@ module SendgridToolkit
       @api_user = (api_user.nil?) ? ENV['SMTP_USERNAME'] : api_user
       @api_key = (api_key.nil?) ? ENV['SMTP_PASSWORD'] : api_key
 
-      raise SendgridToolkit::NoAPIUserSpecified if @api_user.blank?
-      raise SendgridToolkit::NoAPIKeySpecified if @api_key.blank?
+      raise SendgridToolkit::NoAPIUserSpecified if @api_user.nil? || @api_user.length == 0
+      raise SendgridToolkit::NoAPIKeySpecified if @api_key.nil? || @api_key.length == 0
     end
 
     protected

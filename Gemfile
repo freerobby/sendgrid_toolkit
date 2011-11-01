@@ -1,6 +1,5 @@
 source "http://rubygems.org"
 
-gem "activesupport", ">= 2.3.5"
 gem "httparty", ">= 0.7.6"
 
 group :development do
