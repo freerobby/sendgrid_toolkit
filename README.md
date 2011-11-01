@@ -10,6 +10,7 @@ SendgridToolkit provides a class for interacting with each of the following Send
 
   - Bounces
   - InvalidEmails
+  - Mail
   - SpamReports
   - Statistics
   - Unsubscribes
@@ -107,6 +108,21 @@ Each hash in `invalid_emails` will now contain a `created` key, which holds a Ru
 If you believe a once-invalid email address is now valid and would like Sendgrid to deliver future emails to that address, you may delete the InvalidEmail entry:
 
     invalid_emails.delete :email => "email@address.of.invalid.to.delete"
+
+Mail Module
+-----------
+
+The Mail module lets you send email via the web API.
+
+- - -
+
+Call `:send_email` (chosen to avoid conflicts with Object:send) with the standard parameters:
+
+    SendgridToolkit::Mail.new(api_user, api_key).send_email :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text"
+
+The complete set of "x-smtpapi" options are also supported. You can use them like:
+
+  SendgridToolkit::Mail.new(api_user, api_key).send_email :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text", "x-smtpapi" => {:category => "Retention"}
 
 SpamReports Module
 ------------------
