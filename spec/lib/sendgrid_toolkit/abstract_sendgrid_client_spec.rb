@@ -17,7 +17,7 @@ describe SendgridToolkit::AbstractSendgridClient do
       }.should raise_error SendgridToolkit::AuthenticationFailed
     end
     it "thows error when sendgrid response is a server error" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/profile\.get\.json\?|, :body => 'A server error occured', :status => ['500', 'Internal Server Error'])
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/profile\.get\.json\?|, :body => '{}', :status => ['500', 'Internal Server Error'])
       @obj = SendgridToolkit::AbstractSendgridClient.new("someuser", "somepass")
       lambda {
         @obj.send(:api_post, "profile", "get", {})

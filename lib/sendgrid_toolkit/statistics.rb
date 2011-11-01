@@ -2,6 +2,7 @@ module SendgridToolkit
   class Statistics < AbstractSendgridClient
     def retrieve(options = {})
       response = api_post('stats', 'get', options)
+      response.each {|r| r['date'] = Date.parse(r['date']) if r.kind_of?(Hash) && r.has_key?('date')}
       response
     end
     

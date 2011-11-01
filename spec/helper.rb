@@ -1,6 +1,6 @@
 require 'fakeweb'
 require 'sendgrid_toolkit'
-require 'spec'
+require 'rspec'
 
 FakeWeb.allow_net_connect = false
 
