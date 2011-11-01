@@ -7,13 +7,11 @@ describe SendgridToolkit::Mail do
   end
   
   describe "#send" do
-    it "returns an error when some attributes are missing" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/mail\.send\.json\?|, :body => '[{"email":"user@domain.com"},{"email":"user2@domain2.com"},{"email":"user3@domain2.com"}]')
-      emails = @obj.send_mail(:to => "elad@fiverr.com", :from => "testing@fiverr.com", :subject => "Hi there!", :text => "testing body", :x_smtpapi => {:category => "Testing", :to => ["elad@fiverr.com"]})
-      emails[0]['email'].should == "user@domain.com"
-      emails[1]['email'].should == "user2@domain2.com"
-      emails[2]['email'].should == "user3@domain2.com"
+    it "raises error when sendgrid returns an error" do
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/mail\.send\.json\?|, :body => '{"message": "error", "errors": ["Missing destination email"]}')
+      lambda {
+        response = @obj.send_mail :from => "testing@fiverr.com", :subject => "Subject", :text => "Text", "x-smtpapi" => {:category => "Testing", :to => ["elad@fiverr.com"]}
+      }.should raise_error SendgridToolkit::SendEmailError
     end
-  end
-  end
+  end  
 end
