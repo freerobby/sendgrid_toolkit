@@ -56,18 +56,18 @@ describe SendgridToolkit do
       @obj = SendgridToolkit::Unsubscribes.new
       unsubscribes = @obj.retrieve
       unsubscribes.each do |u|
-        @obj.delete u['email']
+        @obj.delete :email => u['email']
       end
     end
     xit "adds, retrieves and deletes email addresses properly" do
-      @obj.add "user@domain.com"
-      @obj.add "user2@domain.com"
+      @obj.add :email => "user@domain.com"
+      @obj.add :email => "user2@domain.com"
       unsubs = @obj.retrieve_with_timestamps
       emails = unsubs.map {|h| h['email']}
       emails.include?('user@domain.com').should == true
       emails.include?('user2@domain.com').should == true
-      @obj.delete 'user@domain.com'
-      @obj.delete 'user2@domain.com'
+      @obj.delete :email => 'user@domain.com'
+      @obj.delete :email => 'user2@domain.com'
       @obj.retrieve.count.should == 0
     end
   end
