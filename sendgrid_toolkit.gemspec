@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "sendgrid_toolkit"
-  s.version = "1.0.7"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Robby Grossman"]
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/sendgrid_toolkit/bounces.rb",
     "lib/sendgrid_toolkit/common.rb",
     "lib/sendgrid_toolkit/invalid_emails.rb",
+    "lib/sendgrid_toolkit/mail.rb",
     "lib/sendgrid_toolkit/sendgrid_error.rb",
     "lib/sendgrid_toolkit/spam_reports.rb",
     "lib/sendgrid_toolkit/statistics.rb",
@@ -39,6 +40,7 @@ Gem::Specification.new do |s|
     "spec/lib/sendgrid_toolkit/bounces_spec.rb",
     "spec/lib/sendgrid_toolkit/common_spec.rb",
     "spec/lib/sendgrid_toolkit/invalid_emails_spec.rb",
+    "spec/lib/sendgrid_toolkit/mail_spec.rb",
     "spec/lib/sendgrid_toolkit/spam_reports_spec.rb",
     "spec/lib/sendgrid_toolkit/statistics_spec.rb",
     "spec/lib/sendgrid_toolkit/unsubscribes_spec.rb",
