@@ -37,6 +37,18 @@ Contributing
 
 Big thanks to [James Brennan][1] for refactoring old code and writing the Bounces, InvalidEmails and SpamReports modules.
 
+Setting your API credentials globally
+-------------------------------------
+
+Setting your API user and key once globally for all API access:
+
+    SendgridToolkit.api_user = "bob"
+    SendgridToolkit.api_key = "x123y"
+    
+If you do this when you create individual API objects you will not need to pass the `api_user` or `api_key`
+
+    bounces = SendgridToolkit::Bounces.new
+
 Bounces Module
 --------------
 The bounces module provides access to all of your bounces.
