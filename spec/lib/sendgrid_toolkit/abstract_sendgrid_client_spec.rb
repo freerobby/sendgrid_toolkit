@@ -33,11 +33,26 @@ describe SendgridToolkit::AbstractSendgridClient do
   end
 
   describe "#initialize" do
+    after(:each) do
+      SendgridToolkit.api_user = nil
+      SendgridToolkit.api_key = nil
+    end
     it "stores api credentials when passed in" do
       ENV['SMTP_USERNAME'] = "env_username"
       ENV['SMTP_PASSWORD'] = "env_apikey"
 
       @obj = SendgridToolkit::AbstractSendgridClient.new("username", "apikey")
+      @obj.instance_variable_get("@api_user").should == "username"
+      @obj.instance_variable_get("@api_key").should == "apikey"
+    end
+    it "uses module level user and key if they are set" do
+      SendgridToolkit.api_user = "username"
+      SendgridToolkit.api_key = "apikey"
+      
+      SendgridToolkit.api_key.should == "apikey"
+      SendgridToolkit.api_user.should == "username"
+
+      @obj = SendgridToolkit::AbstractSendgridClient.new
       @obj.instance_variable_get("@api_user").should == "username"
       @obj.instance_variable_get("@api_key").should == "apikey"
     end
