@@ -2,8 +2,8 @@ module SendgridToolkit
   class AbstractSendgridClient
 
     def initialize(api_user = nil, api_key = nil)
-      @api_user = (api_user.nil?) ? ENV['SMTP_USERNAME'] : api_user
-      @api_key = (api_key.nil?) ? ENV['SMTP_PASSWORD'] : api_key
+      @api_user = api_user || SendgridToolkit.api_user || ENV['SMTP_USERNAME']
+      @api_key = api_key || SendgridToolkit.api_key || ENV['SMTP_PASSWORD']
 
       raise SendgridToolkit::NoAPIUserSpecified if @api_user.nil? || @api_user.length == 0
       raise SendgridToolkit::NoAPIKeySpecified if @api_key.nil? || @api_key.length == 0

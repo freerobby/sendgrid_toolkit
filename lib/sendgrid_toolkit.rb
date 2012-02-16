@@ -12,4 +12,13 @@ require 'sendgrid_toolkit/mail'
 
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"
+  
+  class << self
+    def api_user=(v); @api_user = v; end
+    def api_user; @api_user; end
+    
+    def api_key=(v); @api_key = v; end
+    def api_key; @api_key; end
+  end
+  
 end
