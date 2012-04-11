@@ -10,27 +10,28 @@ describe SendgridToolkit do
   after :all do
     FakeWeb.allow_net_connect = false
   end
-  
+
   before do
     backup_env
-    
+
     # Don't let SendgridToolkit fall back to SMTP_USERNAME and SMTP_PASSWORD
-    ENV['SMTP_USERNAME'] = ENV['TEST_SMTP_USERNAME'].blank? ? "fakeuser" : ENV['TEST_SMTP_USERNAME']
-    ENV['SMTP_PASSWORD'] = ENV['TEST_SMTP_PASSWORD'].blank? ? "fakepass" : ENV['TEST_SMTP_PASSWORD']
+    ENV['SMTP_USERNAME'] = ENV['TEST_SMTP_USERNAME'].nil? ? "fakeuser" : ENV['TEST_SMTP_USERNAME']
+    ENV['SMTP_PASSWORD'] = ENV['TEST_SMTP_PASSWORD'].nil? ? "fakepass" : ENV['TEST_SMTP_PASSWORD']
   end
+
   after do
     restore_env
   end
-  
+
   describe "abstract_sendgrid_client i/o" do
-    xit "throws authentication error when authentication fails" do
+    it "throws authentication error when authentication fails" do
       @obj = SendgridToolkit::AbstractSendgridClient.new("fakeuser", "fakepass")
       lambda {
         @obj.send(:api_post, "profile", "get", {})
       }.should raise_error SendgridToolkit::AuthenticationFailed
     end
   end
-  
+
   describe "statistics i/o" do
     before do
       @obj = SendgridToolkit::Statistics.new

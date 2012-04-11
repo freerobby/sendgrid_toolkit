@@ -37,6 +37,17 @@ Contributing
 
 Big thanks to [James Brennan][1] for refactoring old code and writing the Bounces, InvalidEmails and SpamReports modules.
 
+Install
+-----------------
+
+Via rubygems.org:
+
+    $ gem install sendgrid_toolkit
+
+Or add it to your `Gemfile`
+
+    gem 'sendgrid_toolkit', '>= 1.1.1'
+
 Setting your API credentials globally
 -------------------------------------
 
@@ -44,7 +55,7 @@ Setting your API user and key once globally for all API access:
 
     SendgridToolkit.api_user = "bob"
     SendgridToolkit.api_key = "x123y"
-    
+
 If you do this when you create individual API objects you will not need to pass the `api_user` or `api_key`
 
     bounces = SendgridToolkit::Bounces.new
@@ -134,7 +145,7 @@ Call `:send_mail` (chosen to avoid conflicts with Object:send) with the standard
 
 The complete set of "x-smtpapi" options are also supported. You can use them like:
 
-  SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text", "x-smtpapi" => {:category => "Retention"}
+    SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text", "x-smtpapi" => {:category => "Retention"}
 
 SpamReports Module
 ------------------
