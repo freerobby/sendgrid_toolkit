@@ -1,6 +1,8 @@
 SendgridToolkit
 ===============
 
+[![Build Status](https://secure.travis-ci.org/freerobby/sendgrid_toolkit.png)](http://travis-ci.org/freerobby/sendgrid_toolkit)
+
 SendgridToolkit is a Ruby wrapper for the Sendgrid Web API
 
 Supported Modules
