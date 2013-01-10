@@ -1,4 +1,5 @@
-require 'httparty'
+require 'faraday'
+require 'faraday_middleware'
 
 require 'sendgrid_toolkit/abstract_sendgrid_client'
 require 'sendgrid_toolkit/common'

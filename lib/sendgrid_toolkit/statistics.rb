@@ -9,10 +9,10 @@ module SendgridToolkit
     def retrieve_aggregate(options = {})
       options.merge! :aggregate => 1
       response = retrieve options
-      if Hash === response.parsed_response
-          to_ints(response.parsed_response)
-      elsif Array === response.parsed_response
-          response.parsed_response.each {|o| to_ints(o) }
+      if Hash === response
+          to_ints(response)
+      elsif Array === response
+          response.each {|o| to_ints(o) }
       end
       response
     end
