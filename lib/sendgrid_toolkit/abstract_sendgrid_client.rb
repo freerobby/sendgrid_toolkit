@@ -12,18 +12,24 @@ module SendgridToolkit
     protected
 
     def api_post(module_name, action_name, opts = {})
-      response = HTTParty.post("https://#{BASE_URI}/#{module_name}.#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
-      if response.code > 401
-        raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error. #{response.inspect}")
-      elsif has_error?(response) and
-          response['error'].respond_to?(:has_key?) and
-          response['error'].has_key?('code') and
-          response['error']['code'].to_i == 401
-        raise SendgridToolkit::AuthenticationFailed
-      elsif has_error?(response)
-        raise(SendgridToolkit::APIError, response['error'])
+      uri = URI.parse("https://#{BASE_URI}/#{module_name}.#{action_name}.json")
+      conn = Faraday.new(uri) do |faraday|
+        faraday.use Faraday::Request::UrlEncoded
+        faraday.use Faraday::Response::ParseJson
+        faraday.adapter Faraday.default_adapter
       end
-      response
+      response = conn.post(uri.path, get_credentials.merge(opts))
+      if response.status > 401
+        raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error. #{response.body.inspect}")
+      elsif has_error?(response.body) and
+          response.body['error'].respond_to?(:has_key?) and
+          response.body['error'].has_key?('code') and
+          response.body['error']['code'].to_i == 401
+        raise SendgridToolkit::AuthenticationFailed
+      elsif has_error?(response.body)
+        raise(SendgridToolkit::APIError, response.body['error'])
+      end
+      response.body
     end
 
     def get_credentials
