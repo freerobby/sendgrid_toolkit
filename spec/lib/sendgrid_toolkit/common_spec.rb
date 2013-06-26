@@ -6,7 +6,7 @@ describe SendgridToolkit::Common do
     class FakeClass < SendgridToolkit::AbstractSendgridClient
       include SendgridToolkit::Common
     end
-    @fake_class = FakeClass.new
+    @fake_class = FakeClass.new("fakeuser", "fakepass")
   end
 
   it "creates a module_name method that returns the class name downcased" do
