@@ -12,6 +12,8 @@ SendgridToolkit provides a class for interacting with each of the following Send
 
   - Bounces
   - InvalidEmails
+  - Lists
+  - ListEmails
   - Mail
   - SpamReports
   - Statistics
@@ -133,6 +135,96 @@ Each hash in `invalid_emails` will now contain a `created` key, which holds a Ru
 If you believe a once-invalid email address is now valid and would like Sendgrid to deliver future emails to that address, you may delete the InvalidEmail entry:
 
     invalid_emails.delete :email => "email@address.of.invalid.to.delete"
+
+Lists Module
+------------
+
+The Lists module lets you manage your recipient lists associated with the marketing email feature via the marketing emails API.
+
+- - -
+
+Instantiate the Lists object:
+
+    lists_obj = SendgridToolkit::Lists.new(api_user, api_key)
+
+- - -
+
+Retrieve lists:
+
+    lists = lists_obj.get
+
+`lists` will be an array of hashes, each of which contains a `list` key, which contain the name of the lists.
+
+- - -
+
+Create list:
+
+    response = lists_obj.add :list => 'new_list_name'
+
+`response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
+
+When creating a list you can also specify a custom column name for the `name` associated with email addresses.
+
+Example:
+
+    response = lists_obj.add :list => 'new_list_name', :name => 'customer_name'
+
+
+- - -
+
+Edit list:
+
+    response = lists_obj.edit :list => 'some_old_name', :new_list => 'some_new_name'
+
+`response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
+
+- - -
+
+Delete list:
+
+    response = lists_obj.delete :list => 'some_list_name'
+
+`response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
+
+
+ListEmails Module
+-----------------
+
+The ListEmails module lets you manage your emails in your recipient lists associated with the marketing email feature via the marketing emails API.
+
+- - -
+
+Instantiate the ListEmails object:
+
+    list_emails_obj = SendgridToolkit::ListEmails.new(api_user, api_key)
+
+- - -
+
+Get emails:
+
+    list_emails = list_emails_obj.get :list => 'some_list_name'
+
+`list_emails` will be an array of hashes, each of which contains the following keys:
+
+  - `email`: The email address of the recipient
+  - `name`: The name of the recipient. This key may be different if you changed the column name
+
+- - -
+
+Add email:
+
+    response = list_emails_obj.add :list => 'some_list_name', :data => { :email => 'some_new_email@example.com', :name => 'some_new_person'}
+
+`response` will be a hash containing a `inserted` key, which contains the number of emails inserted into the list.
+
+- - -
+
+Remove email:
+
+    response = list_emails_obj.delete :list => 'some_list_name', :email => 'some_email@example.com'
+
+`response` will be a hash containing a `removed` key, which contains the number of emails removed from the list.
+
 
 Mail Module
 -----------
