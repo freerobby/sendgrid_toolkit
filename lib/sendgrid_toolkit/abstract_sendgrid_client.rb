@@ -11,8 +11,8 @@ module SendgridToolkit
 
     protected
 
-    def api_post(module_name, action_name, opts = {})
-      response = HTTParty.post("https://#{BASE_URI}/#{module_name}.#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
+    def api_post(module_name, action_name, opts = {}, body = {})
+      response = HTTParty.post("https://#{BASE_URI}/#{module_name}.#{action_name}.json?", :query => get_credentials.merge(opts), :body => body, :format => :json)
       if response.code > 401
         raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error. #{response.inspect}")
       elsif has_error?(response) and
