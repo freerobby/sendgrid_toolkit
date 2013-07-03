@@ -8,6 +8,9 @@ describe SendgridToolkit::AbstractSendgridClient do
     restore_env
   end
 
+  subject { SendgridToolkit::AbstractSendgridClient.new("someuser", "somepass") }
+  let(:success_response) { double("response", { :code => 200 }) }
+
   describe "#api_post" do
     it "throws error when authentication fails" do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/profile\.get\.json\?|, :body => '{"error":{"code":401,"message":"Permission denied, wrong credentials"}}')
@@ -29,6 +32,18 @@ describe SendgridToolkit::AbstractSendgridClient do
       lambda {
         @obj.send(:api_post, "stats", "get", {})
       }.should raise_error SendgridToolkit::APIError
+    end
+    context 'when a body is present' do
+      it 'posts with the body' do
+        HTTParty.should_receive(:post).with("https://sendgrid.com/api/mail.send.json?", :query => { :api_user => "someuser", :api_key => "somepass" }, :body => { :html => "<html><head></head><body>Test</body></html>" }, :format => :json).and_return(success_response)
+        subject.send(:api_post, "mail", "send", {}, { :html => "<html><head></head><body>Test</body></html>" })
+      end
+    end
+    context 'when a body is not present' do
+      it 'posts without the body' do
+        HTTParty.should_receive(:post).with("https://sendgrid.com/api/mail.send.json?", :query => { :api_user => "someuser", :api_key => "somepass" }, :body => {}, :format => :json).and_return(success_response)
+        subject.send(:api_post, "mail", "send", {})
+      end
     end
   end
 
