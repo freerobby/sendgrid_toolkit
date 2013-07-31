@@ -11,6 +11,10 @@ require 'sendgrid_toolkit/blocks'
 require 'sendgrid_toolkit/invalid_emails'
 require 'sendgrid_toolkit/mail'
 
+require 'sendgrid_toolkit/newsletter/newsletter_sendgrid_client'
+require 'sendgrid_toolkit/newsletter/lists'
+require 'sendgrid_toolkit/newsletter/list_emails'
+
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"
   

@@ -12,7 +12,10 @@ module SendgridToolkit
     protected
 
     def api_post(module_name, action_name, opts = {})
-      response = HTTParty.post("https://#{BASE_URI}/#{module_name}.#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
+      base_path = compose_base_path(module_name, action_name)
+      response = HTTParty.post("https://#{BASE_URI}/#{base_path}.json?",
+                               :query => get_credentials.merge(opts),
+                               :format => :json)
       if response.code > 401
         raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error. #{response.inspect}")
       elsif has_error?(response) and
@@ -28,6 +31,10 @@ module SendgridToolkit
 
     def get_credentials
       {:api_user => @api_user, :api_key => @api_key}
+    end
+
+    def compose_base_path(module_name, action_name)
+      "#{module_name}.#{action_name}"
     end
 
     private
