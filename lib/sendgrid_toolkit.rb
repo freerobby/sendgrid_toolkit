@@ -10,9 +10,11 @@ require 'sendgrid_toolkit/bounces'
 require 'sendgrid_toolkit/blocks'
 require 'sendgrid_toolkit/invalid_emails'
 require 'sendgrid_toolkit/mail'
+require 'sendgrid_toolkit/marketing_email'
 
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"
+  BASE_URI_FOR_MARKETING = "sendgrid.com/api/newsletter"
   
   class << self
     def api_user=(v); @api_user = v; end
