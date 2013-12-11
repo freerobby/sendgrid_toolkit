@@ -12,6 +12,7 @@ require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/invali
 require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/mail'
 require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/category'
 require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/recipients'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/lists'
 
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"

@@ -3,9 +3,8 @@ module SendgridToolkit
   module Common
 
     def retrieve(options = {}, request_type='get')
-      
       #added condition for marketing related modules.
-      if ['category', 'recipients'].include?(module_name)
+      if ['category', 'recipients', 'lists'].include?(module_name)
         response = marketing_request(module_name, request_type, options)
       else
         response = api_post(module_name, request_type, options)
