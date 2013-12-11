@@ -1,16 +1,17 @@
 require 'httparty'
 
-require 'sendgrid_toolkit/abstract_sendgrid_client'
-require 'sendgrid_toolkit/common'
-require 'sendgrid_toolkit/sendgrid_error'
-require 'sendgrid_toolkit/statistics'
-require 'sendgrid_toolkit/unsubscribes'
-require 'sendgrid_toolkit/spam_reports'
-require 'sendgrid_toolkit/bounces'
-require 'sendgrid_toolkit/blocks'
-require 'sendgrid_toolkit/invalid_emails'
-require 'sendgrid_toolkit/mail'
-require 'sendgrid_toolkit/marketing_email'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/abstract_sendgrid_client'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/common'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/sendgrid_error'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/statistics'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/unsubscribes'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/spam_reports'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/bounces'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/blocks'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/invalid_emails'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/mail'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/category'
+require '/home/rishi/work/github/my/sendgrid_toolkit/lib/sendgrid_toolkit/recipients'
 
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"

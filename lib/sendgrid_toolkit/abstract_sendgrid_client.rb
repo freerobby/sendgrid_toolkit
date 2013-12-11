@@ -27,11 +27,13 @@ module SendgridToolkit
     end
     
     def marketing_request(module_name, action_name, opts={})
-      response = HTTParty.post("https://#{BASE_URI_FOR_MARKETING}/#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
+      response = HTTParty.post("https://#{BASE_URI_FOR_MARKETING}/#{module_name}/#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
       if response.code == 403
         raise SendgridToolkit::AuthenticationFailed
       elsif response.code > 403
         raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error.")
+      elsif has_error?(response)
+        raise(SendgridToolkit::APIError, response['error'])
       end
       response
     end
