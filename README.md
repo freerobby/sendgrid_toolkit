@@ -8,7 +8,7 @@ SendgridToolkit is a Ruby wrapper for the Sendgrid Web API
 Supported Modules
 -----------------
 
-SendgridToolkit provides a class for interacting with each of the following Sendgrid API modules:
+SendgridToolkit provides a class for interacting with each of the following Sendgrid Web API modules:
 
   - Bounces
   - InvalidEmails
@@ -16,6 +16,12 @@ SendgridToolkit provides a class for interacting with each of the following Send
   - SpamReports
   - Statistics
   - Unsubscribes
+
+SendgridToolkit also provides a class for interacting with eachof the following Sendgrid Marketing Email API modules:
+  - Categories
+  - Lists
+  - Recipients
+
 
 Consuming the Sendgrid API is as simple as instantiating a class and making the call:
 
@@ -284,6 +290,45 @@ Remove a user from your unsubscribe list:
 
 SendgridToolkit will throw `UnsubscribeEmailDoesNotExist` if the email you specified is not on the list
 
+Categories Module
+--------------------
+
+The category module lists different categories you have created for the marketing emails. This is how you would get all the categories:
+    
+    categories = SendgridToolkit::Category.new(api_user, api_key)
+    category_list = categories.retrieve({}, 'list')
+
+Lists Module
+--------------------
+
+The List module lets you find all the recipients list in your account or to check if a particular exists or not. This is how you would achieve this:
+    
+    list = SendgridToolkit::List.new(api_user, api_key)
+    category_list = categories.retrieve
+
+    The response expected should be like :
+
+    [
+      {
+        "list" : "test"
+      }
+    ]
+
+Recipients Module
+--------------------
+
+The Recipient module lets you find all the lists assigned to a particular marketing email. 
+    
+    recipient = SendgridToolkit::Recipient.new(api_user, api_key)
+    recipient_list = recipient.retrieve
+
+    The response expected is :
+    
+    [
+      {
+        "list" : "Training Contacts"
+      }
+    ]
 
 A note about authentication
 ---------------------------

@@ -25,7 +25,7 @@ describe SendgridToolkit::Category do
     it "returns response when no error is recieved" do
       FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/newsletter/category/list\.json\?|, :body => "[]")
       response = @obj.retrieve({}, 'list') 
-      response.body.should == "[]"
+      response.should == []
     end
 
   end  
