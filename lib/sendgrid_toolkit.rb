@@ -16,7 +16,7 @@ require 'sendgrid_toolkit/newsletter/lists'
 require 'sendgrid_toolkit/newsletter/list_emails'
 
 module SendgridToolkit
-  BASE_URI = "sendgrid.com/api"
+  BASE_URI = "api.sendgrid.com/api"
   
   class << self
     def api_user=(v); @api_user = v; end
