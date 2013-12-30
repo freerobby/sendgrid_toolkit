@@ -8,7 +8,7 @@ describe SendgridToolkit::Statistics do
   
   describe "#retrieve" do
     it "parses daily totals" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/stats\.get\.json\?|, :body => '[{"date":"2009-06-20","requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5},{"date":"2009-06-21","requests":32342,"bounces":10,"clicks":14323,"opens":10995,"spamreports":7},{"date":"2009-06-22","requests":52342,"bounces":11,"clicks":19223,"opens":12992,"spamreports":2}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/stats\.get\.json\?|, :body => '[{"date":"2009-06-20","requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5},{"date":"2009-06-21","requests":32342,"bounces":10,"clicks":14323,"opens":10995,"spamreports":7},{"date":"2009-06-22","requests":52342,"bounces":11,"clicks":19223,"opens":12992,"spamreports":2}]')
       stats = @obj.retrieve
       stats.each do |stat|
         %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int|
@@ -21,7 +21,7 @@ describe SendgridToolkit::Statistics do
   
   describe "#retrieve_aggregate" do
     it "parses aggregate statistics" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/stats\.get\.json\?.*aggregate=1|, :body => '{"requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/stats\.get\.json\?.*aggregate=1|, :body => '{"requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5}')
       stats = @obj.retrieve_aggregate
       %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int|
         stats[int].kind_of?(Integer).should == true if stats.has_key?(int) # We support all fields presently returned, but we are only testing what sendgrid officially documents
@@ -29,7 +29,7 @@ describe SendgridToolkit::Statistics do
     end
     
     it "parses aggregate statistics for array response" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/stats\.get\.json\?.*aggregate=1|, :body => '[{"requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5},{"requests":5,"bounces":10,"clicks":10223,"opens":9992,"spamreports":5}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/stats\.get\.json\?.*aggregate=1|, :body => '[{"requests":12342,"bounces":12,"clicks":10223,"opens":9992,"spamreports":5},{"requests":5,"bounces":10,"clicks":10223,"opens":9992,"spamreports":5}]')
       stats = @obj.retrieve_aggregate
       %w(bounces clicks delivered invalid_email opens repeat_bounces repeat_spamreports repeat_unsubscribes requests spamreports unsubscribes).each do |int|
         # We support all fields presently returned, but we are only testing what sendgrid officially documents
@@ -41,7 +41,7 @@ describe SendgridToolkit::Statistics do
   
   describe "#list_categories" do
     it "parses categories list" do
-      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/stats\.get\.json\?.*list=true|, :body => '[{"category":"categoryA"},{"category":"categoryB"},{"category":"categoryC"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/stats\.get\.json\?.*list=true|, :body => '[{"category":"categoryA"},{"category":"categoryB"},{"category":"categoryC"}]')
       cats = @obj.list_categories
       cats[0]['category'].should == 'categoryA'
       cats[1]['category'].should == 'categoryB'

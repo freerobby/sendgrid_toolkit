@@ -14,7 +14,7 @@ describe SendgridToolkit::Common do
   end
 
   it "does not choke if response does not have a 'message' field" do
-    FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/fakeclass\.delete\.json\?.*email=.+|, :body => '{}')
+    FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/fakeclass\.delete\.json\?.*email=.+|, :body => '{}')
     lambda {
       @fake_class.delete :email => "user@domain.com"
     }.should_not raise_error
