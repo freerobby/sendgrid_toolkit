@@ -35,7 +35,7 @@ module SendgridToolkit
     private
 
     def parse_message_time(message)
-      message['created'] = Time.parse(message['created']) if message.has_key?('created')
+      message['created'] = Time.parse(message['created']+' UTC') if message.has_key?('created')
     end
 
   end

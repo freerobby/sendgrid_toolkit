@@ -20,4 +20,13 @@ describe SendgridToolkit::Common do
     }.should_not raise_error
   end
 
+  # this will only really test it on a computer that's on on utc.
+  describe 'retrieve_with_timestamps' do
+    it 'should parse the created date in utc' do
+      FakeWeb.register_uri(:post, %r|https://sendgrid\.com/api/fakeclass\.get\.json\?.*date=1|, :body => '[{"created":"2013-11-25 13:00:00"}]')
+      fake_class = @fake_class.retrieve_with_timestamps
+      fake_class[0]['created'].utc.iso8601.should == "2013-11-25T13:00:00Z"
+    end
+  end
+
 end

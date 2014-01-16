@@ -21,7 +21,7 @@ module SendgridToolkit
       options.merge! :date => 1
       response = retrieve options
       response.each do |unsubscribe|
-        unsubscribe['created'] = Time.parse(unsubscribe['created']) if unsubscribe.has_key?('created')
+        unsubscribe['created'] = Time.parse(unsubscribe['created']+' UTC') if unsubscribe.has_key?('created')
       end
       response
     end
