@@ -3,12 +3,12 @@ SendgridToolkit
 
 [![Build Status](https://secure.travis-ci.org/freerobby/sendgrid_toolkit.png)](http://travis-ci.org/freerobby/sendgrid_toolkit)
 
-SendgridToolkit is a Ruby wrapper for the Sendgrid Web API
+SendgridToolkit is a Ruby wrapper for the SendGrid Web API
 
 Supported Modules
 -----------------
 
-SendgridToolkit provides a class for interacting with each of the following Sendgrid API modules:
+SendgridToolkit provides a class for interacting with each of the following SendGrid API modules:
 
   - Bounces
   - InvalidEmails
@@ -19,14 +19,14 @@ SendgridToolkit provides a class for interacting with each of the following Send
   - Statistics
   - Unsubscribes
 
-Consuming the Sendgrid API is as simple as instantiating a class and making the call:
+Consuming the SendGrid API is as simple as instantiating a class and making the call:
 
     unsubscribes = SendgridToolkit::Unsubscribes.new("username", "api_key")
     unsubscribes.add :email => "email@to.unsubscribe"
 
 Two lines, and voila!
 
-Common actions are documented below under each module. For more details, visit the [Sendgrid Web API Documentation][2]
+Common actions are documented below under each module. For more details, visit the [SendGrid Web API Documentation][2]
 
 Contributing
 ------------
@@ -96,7 +96,7 @@ Each hash in `all_bounces` will now contain a `created` key, which holds a Ruby 
 
 - - -
 
-If you believe an email address will no longer bounce and would like Sendgrid to deliver future emails to that address, you may delete the Bounce entry:
+If you believe an email address will no longer bounce and would like SendGrid to deliver future emails to that address, you may delete the Bounce entry:
 
     bounces.delete :email => "email@address.of.bounce.to.delete"
 
@@ -132,7 +132,7 @@ Each hash in `invalid_emails` will now contain a `created` key, which holds a Ru
 
 - - -
 
-If you believe a once-invalid email address is now valid and would like Sendgrid to deliver future emails to that address, you may delete the InvalidEmail entry:
+If you believe a once-invalid email address is now valid and would like SendGrid to deliver future emails to that address, you may delete the InvalidEmail entry:
 
     invalid_emails.delete :email => "email@address.of.invalid.to.delete"
 
@@ -293,13 +293,20 @@ Retrieve statistics:
 `stats` will be an array of hashes, each of which contains the following keys:
 
   - `date`: The date to which the statistics in this hash refer to
-  - `requests`: The number of emails you sent
-  - `bounces`: The number of users who opened your email but did not click on your links
-  - `clicks`: The number of users who clicked on a link in your email
+  - `requests`: The number of emails you requested be sent
+  - `delivered`: The number of emails delivered to email servers
+  - `bounces`: The number of emails which were rejected by email servers
+  - `repeat_bounces`: The number of emails which bounced repeatedly
+  - `blocked`: The number of emails which were [suppressed][4] by SendGrid
+  - `spam_drop`: The number of emails which SendGrid dropped as spam
+  - `clicks`: The number of clicks on links in your emails
+  - `unique_clicks`: The number of users who clicked on a link in your email
   - `opens`: The number of users who opened your email
+  -  `unique_opens`: The number of users who opened your email
   - `spamreports`: The number of users who have reported your emails as spam
-
-`stats` may also contain some keys that Sendgrid does not officially document, such as: `delivered`, `invalid_email`, `repeat_bounces`,`+repeat_spamreports`, `repeat_unsubscribes` and `unsubscribes`
+  - `unsubscribes`: The number of unsubscribes your messages have received (if you are using the [subscription tracking app][3]
+  - `repeat_unsubscribes`: The number of repeat unsubscribes (if a user unsubscribed, resubscribed and then unsubscribed again)
+  - `bounces`: The number of emails that bounced
 
 - - -
 
@@ -311,7 +318,7 @@ To narrow your retrieval to emails within the last month but before one week ago
 
     stats = statistics.retrieve :start_date => 1.month.ago, :end_date => 1.week.ago
 
-To narrow your search to a particular category (applicable only if you use this Sendgrid feature):
+To narrow your search to a particular category (applicable only if you use this SendGrid feature):
 
     stats = statistics.retrieve :category => "NameOfYourCategory"
 
@@ -329,7 +336,7 @@ Receive your all-time statistics:
 
 - - -
 
-If you use Sendgrid's category feature, you can list your categories:
+If you use SendGrid's category feature, you can list your categories:
 
     cats = statistics.list_categories
 
@@ -362,7 +369,7 @@ Each hash in `listing` will now contain a `created` key, which holds a Ruby Time
 
 - - -
 
-Unsubscribe a user from your sendgrid email:
+Unsubscribe a user from your SendGrid email:
 
     unsubscribes.add :email => "email@to.unsubscribe"
 
@@ -380,7 +387,7 @@ SendgridToolkit will throw `UnsubscribeEmailDoesNotExist` if the email you speci
 A note about authentication
 ---------------------------
 
-Each class is initialized with `api_user` and `api_key` parameters. `api_user` is your sendgrid account email address, and `api_key` is your sendgrid password.
+Each class is initialized with `api_user` and `api_key` parameters. `api_user` is your SendGrid account email address, and `api_key` is your SendGrid password.
 
 If you don't supply `api_user` or `api_key`, SendgridToolkit will look for the `SMTP_USERNAME` or `SMTP_PASSWORD` environment variables. If they are not found, SendgridToolkit will throw `NoAPIKeySpecified` or `NoAPIUserSpecified`, depending on what you omitted.
 
@@ -390,14 +397,14 @@ If authentication fails during an API request, SendgridToolkit throws `Authentic
 In Case You're Curious...
 -------------------------
 
-API requests are made and responses are received in JSON. All requests are made as POSTs unless noted otherwise (Sendgrid's examples are via GET, but they support POST)
+API requests are made and responses are received in JSON. All requests are made as POSTs unless noted otherwise (some of SendGrid's examples are via GET, but they support POST)
 
-Each class takes a final options parameter in the form of a hash. You may use this parameter to pass additional options to the Sendgrid API. For example, let's say you are using the unsubscribes function:
+Each class takes a final options parameter in the form of a hash. You may use this parameter to pass additional options to the SendGrid API. For example, let's say you are using the unsubscribes function:
 
     unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
     listing = unsubscribes.retrieve
 
-If Sendgrid were to add a `only_verified` option to this API call, you could call:
+If SendGrid were to add a `only_verified` option to this API call, you could call:
 
     listing = unsubscribes.retrieve :only_verified => true
 
@@ -406,12 +413,14 @@ to make use of it.
 Testing
 -------
 
-In addition to unit tests, SendgridToolkit comes with a limited suite of "webconnect" tests that will actually hit Sendgrid's servers and perform various actions for purposes of real-world testing. In order to use these tests, you must:
+In addition to unit tests, SendgridToolkit comes with a limited suite of "webconnect" tests that will actually hit SendGrid's servers and perform various actions for purposes of real-world testing. In order to use these tests, you must:
 
-  1. Create a test account with sendgrid and store the credentials in `TEST_SMTP_USERNAME` and `TEST_SMTP_PASSWORD` environment variables. This is so that actions are performed on a test account and not your real Sendgrid account. If you forget, don't worry -- the tests will fail but they will **not** fall back on the account that uses `SMTP_USERNAME` and `SMTP_PASSWORD`.
+  1. Create a test account with SendGrid and store the credentials in `TEST_SMTP_USERNAME` and `TEST_SMTP_PASSWORD` environment variables. This is so that actions are performed on a test account and not your real SendGrid account. If you forget, don't worry -- the tests will fail but they will **not** fall back on the account that uses `SMTP_USERNAME` and `SMTP_PASSWORD`.
   2. Change "xit" it "it" on the tests you wish to run.
 
 Running "spec spec" out of the box will run the standard suite of tests (all network access is stubbed out).
 
 [1]: http://github.com/jamesBrennan
-[2]: http://wiki.sendgrid.com/doku.php?id=web_api
+[2]: http://sendgrid.com/docs/API_Reference/Web_API/
+[3]: http://sendgrid.com/docs/Apps/subscription_tracking.html
+[4]: https://sendgrid.zendesk.com/hc/en-us/articles/200181728-My-emails-are-being-dropped-
