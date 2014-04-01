@@ -1,7 +1,7 @@
 SendgridToolkit
 ===============
 
-[![Build Status](https://secure.travis-ci.org/freerobby/sendgrid_toolkit.png)](http://travis-ci.org/freerobby/sendgrid_toolkit)
+[![Build Status](https://secure.travis-ci.org/freerobby/sendgrid_toolkit.svg)](http://travis-ci.org/freerobby/sendgrid_toolkit)
 
 SendgridToolkit is a Ruby wrapper for the SendGrid Web API
 
@@ -20,10 +20,10 @@ SendgridToolkit provides a class for interacting with each of the following Send
   - Unsubscribes
 
 Consuming the SendGrid API is as simple as instantiating a class and making the call:
-
-    unsubscribes = SendgridToolkit::Unsubscribes.new("username", "api_key")
-    unsubscribes.add :email => "email@to.unsubscribe"
-
+```ruby
+unsubscribes = SendgridToolkit::Unsubscribes.new("username", "api_key")
+unsubscribes.add :email => "email@to.unsubscribe"
+```
 Two lines, and voila!
 
 Common actions are documented below under each module. For more details, visit the [SendGrid Web API Documentation][2]
@@ -45,25 +45,25 @@ Install
 -----------------
 
 Via rubygems.org:
-
-    $ gem install sendgrid_toolkit
-
+```bash
+$ gem install sendgrid_toolkit
+```
 Or add it to your `Gemfile`
-
-    gem 'sendgrid_toolkit', '>= 1.1.1'
-
+```ruby
+gem 'sendgrid_toolkit', '>= 1.1.1'
+```
 Setting your API credentials globally
 -------------------------------------
 
 Setting your API user and key once globally for all API access:
-
-    SendgridToolkit.api_user = "bob"
-    SendgridToolkit.api_key = "x123y"
-
+```ruby
+SendgridToolkit.api_user = "bob"
+SendgridToolkit.api_key = "x123y"
+```
 If you do this when you create individual API objects you will not need to pass the `api_user` or `api_key`
-
-    bounces = SendgridToolkit::Bounces.new
-
+```ruby
+bounces = SendgridToolkit::Bounces.new
+```
 Bounces Module
 --------------
 The bounces module provides access to all of your bounces.
@@ -71,15 +71,15 @@ The bounces module provides access to all of your bounces.
 - - -
 
 Instantiate the Bounces object:
-
-    bounces = SendgridToolkit::Bounces.new(api_user, api_key)
-
+```ruby
+bounces = SendgridToolkit::Bounces.new(api_user, api_key)
+```
 - - -
 
 Retrieve bounces:
-
-    all_bounces = bounces.retrieve
-
+```ruby
+all_bounces = bounces.retrieve
+```
 `all_bounces` will be an array of hashes, each of which contains the following keys:
 
   - `email`: the recipient's email address
@@ -89,17 +89,17 @@ Retrieve bounces:
 - - -
 
 Get the timestamp of each bounce:
-
-    all_bounces = bounces.retrieve_with_timestamps
-
+```ruby
+all_bounces = bounces.retrieve_with_timestamps
+```
 Each hash in `all_bounces` will now contain a `created` key, which holds a Ruby Time object.
 
 - - -
 
 If you believe an email address will no longer bounce and would like SendGrid to deliver future emails to that address, you may delete the Bounce entry:
-
-    bounces.delete :email => "email@address.of.bounce.to.delete"
-
+```ruby
+bounces.delete :email => "email@address.of.bounce.to.delete"
+```
 InvalidEmails Module
 --------------------
 
@@ -108,15 +108,15 @@ The InvalidEmails module provides access to all of your email addresses.
 - - -
 
 Instantiate the InvalidEmails object:
-
-    invalid_emails_obj = SendgridToolkit::InvalidEmails.new(api_user, api_key)
-
+```ruby
+invalid_emails_obj = SendgridToolkit::InvalidEmails.new(api_user, api_key)
+```
 - - -
 
 Retrieve invalid emails:
-
-    invalid_emails = invalid_emails_obj.retrieve
-
+```ruby
+invalid_emails = invalid_emails_obj.retrieve
+```
 `invalid_emails` will be an array of hashes, each of which contains the following keys:
 
   - `email`: the recipient's email address
@@ -125,17 +125,17 @@ Retrieve invalid emails:
 - - -
 
 Get the timestamp that each email was determined to be invalid:
-
-    invalid_emails = invalid_emails_obj.retrieve_with_timestamps
-
+```ruby
+invalid_emails = invalid_emails_obj.retrieve_with_timestamps
+```
 Each hash in `invalid_emails` will now contain a `created` key, which holds a Ruby Time object.
 
 - - -
 
 If you believe a once-invalid email address is now valid and would like SendGrid to deliver future emails to that address, you may delete the InvalidEmail entry:
-
-    invalid_emails.delete :email => "email@address.of.invalid.to.delete"
-
+```ruby
+invalid_emails.delete :email => "email@address.of.invalid.to.delete"
+```
 Lists Module
 ------------
 
@@ -144,46 +144,46 @@ The Lists module lets you manage your recipient lists associated with the market
 - - -
 
 Instantiate the Lists object:
-
-    lists_obj = SendgridToolkit::Lists.new(api_user, api_key)
-
+```ruby
+lists_obj = SendgridToolkit::Lists.new(api_user, api_key)
+```
 - - -
 
 Retrieve lists:
-
-    lists = lists_obj.get
-
+```ruby
+lists = lists_obj.get
+```
 `lists` will be an array of hashes, each of which contains a `list` key, which contain the name of the lists.
 
 - - -
 
 Create list:
-
-    response = lists_obj.add :list => 'new_list_name'
-
+```ruby
+response = lists_obj.add :list => 'new_list_name'
+```
 `response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
 
 When creating a list you can also specify a custom column name for the `name` associated with email addresses.
 
 Example:
-
-    response = lists_obj.add :list => 'new_list_name', :name => 'customer_name'
-
+```ruby
+response = lists_obj.add :list => 'new_list_name', :name => 'customer_name'
+```
 
 - - -
 
 Edit list:
-
-    response = lists_obj.edit :list => 'some_old_name', :new_list => 'some_new_name'
-
+```ruby
+response = lists_obj.edit :list => 'some_old_name', :new_list => 'some_new_name'
+```
 `response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
 
 - - -
 
 Delete list:
-
-    response = lists_obj.delete :list => 'some_list_name'
-
+```ruby
+response = lists_obj.delete :list => 'some_list_name'
+```
 `response` will be a hash containing a `message` key, which contains either `success` or `error`. If it is error, it will additionally contain the `errors` key, which contains an array of error messages.
 
 
@@ -195,15 +195,15 @@ The ListEmails module lets you manage your emails in your recipient lists associ
 - - -
 
 Instantiate the ListEmails object:
-
-    list_emails_obj = SendgridToolkit::ListEmails.new(api_user, api_key)
-
+```ruby
+list_emails_obj = SendgridToolkit::ListEmails.new(api_user, api_key)
+```
 - - -
 
 Get emails:
-
-    list_emails = list_emails_obj.get :list => 'some_list_name'
-
+```ruby
+list_emails = list_emails_obj.get :list => 'some_list_name'
+```
 `list_emails` will be an array of hashes, each of which contains the following keys:
 
   - `email`: The email address of the recipient
@@ -212,17 +212,17 @@ Get emails:
 - - -
 
 Add email:
-
-    response = list_emails_obj.add :list => 'some_list_name', :data => { :email => 'some_new_email@example.com', :name => 'some_new_person'}
-
+```ruby
+response = list_emails_obj.add :list => 'some_list_name', :data => { :email => 'some_new_email@example.com', :name => 'some_new_person'}
+```
 `response` will be a hash containing a `inserted` key, which contains the number of emails inserted into the list.
 
 - - -
 
 Remove email:
-
-    response = list_emails_obj.delete :list => 'some_list_name', :email => 'some_email@example.com'
-
+```ruby
+response = list_emails_obj.delete :list => 'some_list_name', :email => 'some_email@example.com'
+```
 `response` will be a hash containing a `removed` key, which contains the number of emails removed from the list.
 
 
@@ -234,13 +234,13 @@ The Mail module lets you send email via the web API.
 - - -
 
 Call `:send_mail` (chosen to avoid conflicts with Object:send) with the standard parameters:
-
-    SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text"
-
+```ruby
+SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text"
+```
 The complete set of "x-smtpapi" options are also supported. You can use them like:
-
-    SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text", "x-smtpapi" => {:category => "Retention"}
-
+```ruby
+SendgridToolkit::Mail.new(api_user, api_key).send_mail :to => "user@domain.com", :from => "recipient@domain.com", :subject => "Some Subject", :text => "Some text", "x-smtpapi" => {:category => "Retention"}
+```
 SpamReports Module
 ------------------
 
@@ -249,31 +249,31 @@ The SpamReports module provides access to all email addresses that have reported
 - - -
 
 Instantiate the SpamReports object:
-
-    spam_reports_obj = SendgridToolkit::SpamReports.new(api_user, api_key)
-
+```ruby
+spam_reports_obj = SendgridToolkit::SpamReports.new(api_user, api_key)
+```
 - - -
 
 Retrieve spam reports:
-
-    spam_reports = spam_reports_obj.retrieve
-
+```ruby
+spam_reports = spam_reports_obj.retrieve
+```
 `spam_reports` will be an array of hashes, each of which contains an `email` key, indicating the email address that reported you for spam.
 
 - - -
 
 Get the timestamp of each spam report:
-
-    spam_reports = spam_reports_obj.retrieve_with_timestamps
-
+```ruby
+spam_reports = spam_reports_obj.retrieve_with_timestamps
+```
 Each hash in `spam_reports` will now contain a `created` key, which holds a Ruby Time object.
 
 - - -
 
 If you believe a user will no longer consider your content to be spam, you may delete the SpamReport entry:
-
-    spam_reports.delete :email => "email@address.that.called.you.a.spammer"
-
+```ruby
+spam_reports.delete :email => "email@address.that.called.you.a.spammer"
+```
 Statistics Module
 -----------------
 The statistics module provides access to all of your email statistics.
@@ -281,15 +281,15 @@ The statistics module provides access to all of your email statistics.
 - - -
 
 Instantiate the Statistics object:
-
-    statistics = SendgridToolkit::Statistics.new(api_user, api_key)
-
+```ruby
+statistics = SendgridToolkit::Statistics.new(api_user, api_key)
+```
 - - -
 
 Retrieve statistics:
-
-    stats = statistics.retrieve
-
+```ruby
+stats = statistics.retrieve
+```
 `stats` will be an array of hashes, each of which contains the following keys:
 
   - `date`: The date to which the statistics in this hash refer to
@@ -311,35 +311,35 @@ Retrieve statistics:
 - - -
 
 To narrow your retrieval to the past 5 days:
-
-    stats = statistics.retrieve :days => 5
-
+```ruby
+stats = statistics.retrieve :days => 5
+```
 To narrow your retrieval to emails within the last month but before one week ago:
-
-    stats = statistics.retrieve :start_date => 1.month.ago, :end_date => 1.week.ago
-
+```ruby
+stats = statistics.retrieve :start_date => 1.month.ago, :end_date => 1.week.ago
+```
 To narrow your search to a particular category (applicable only if you use this SendGrid feature):
-
-    stats = statistics.retrieve :category => "NameOfYourCategory"
-
+```ruby
+stats = statistics.retrieve :category => "NameOfYourCategory"
+```
 Note: You may combine a category query with other options, i.e.:
-
-    stats = statistics.retrieve :category => "NameOfYourCategory", :days => 5
-
+```ruby
+stats = statistics.retrieve :category => "NameOfYourCategory", :days => 5
+```
 - - -
 
 Receive your all-time statistics:
-
-    stats = statistics.retrieve_aggregate
-
+```ruby
+stats = statistics.retrieve_aggregate
+```
 `stats` will be a single hash containing all of the aforementioned keys except `date`.
 
 - - -
 
 If you use SendGrid's category feature, you can list your categories:
-
-    cats = statistics.list_categories
-
+```ruby
+cats = statistics.list_categories
+```
 `cats` is an array of hashes, each of which has a `category` key that holds the name of a category.
 
 Unsubscribes Module
@@ -349,38 +349,39 @@ The unsubscribes module manages your list of unsubscribed email addresses.
 - - -
 
 Instantiate the Unsubscribes object:
-
-    unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
-
+```ruby
+unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
+```
 - - -
 
 List everybody who has unsubscribed from your emails with:
-
-    listing = unsubscribes.retrieve
+```ruby
+listing = unsubscribes.retrieve
+```
 `listing` will be an array of hashes, each of which has an `email` key.
 
 - - -
 
 Get the timestamp when each user unsubscribed:
-
-    listing = unsubscribes.retrieve_with_timestamps
-
+```ruby
+listing = unsubscribes.retrieve_with_timestamps
+```
 Each hash in `listing` will now contain a `created` key, which holds a Ruby Time object.
 
 - - -
 
 Unsubscribe a user from your SendGrid email:
-
-    unsubscribes.add :email => "email@to.unsubscribe"
-
+```ruby
+unsubscribes.add :email => "email@to.unsubscribe"
+```
 SendgridToolkit will throw `UnsubscribeEmailAlreadyExists` if the email you specified is already on the list
 
 - - -
 
 Remove a user from your unsubscribe list:
-
-    unsubscribes.delete :email => "email@that_is.unsubscribed"
-
+```ruby
+unsubscribes.delete :email => "email@that_is.unsubscribed"
+```
 SendgridToolkit will throw `UnsubscribeEmailDoesNotExist` if the email you specified is not on the list
 
 
@@ -400,14 +401,14 @@ In Case You're Curious...
 API requests are made and responses are received in JSON. All requests are made as POSTs unless noted otherwise (some of SendGrid's examples are via GET, but they support POST)
 
 Each class takes a final options parameter in the form of a hash. You may use this parameter to pass additional options to the SendGrid API. For example, let's say you are using the unsubscribes function:
-
-    unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
-    listing = unsubscribes.retrieve
-
+```ruby
+unsubscribes = SendgridToolkit::Unsubscribes.new(api_user, api_key)
+listing = unsubscribes.retrieve
+```
 If SendGrid were to add a `only_verified` option to this API call, you could call:
-
-    listing = unsubscribes.retrieve :only_verified => true
-
+```ruby
+listing = unsubscribes.retrieve :only_verified => true
+```
 to make use of it.
 
 Testing
