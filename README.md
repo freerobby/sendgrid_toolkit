@@ -293,13 +293,20 @@ Retrieve statistics:
 `stats` will be an array of hashes, each of which contains the following keys:
 
   - `date`: The date to which the statistics in this hash refer to
-  - `requests`: The number of emails you sent
-  - `bounces`: The number of users who opened your email but did not click on your links
-  - `clicks`: The number of users who clicked on a link in your email
+  - `requests`: The number of emails you requested be sent
+  - `delivered`: The number of emails delivered to email servers
+  - `bounces`: The number of emails which were rejected by email servers
+  - `repeat_bounces`: The number of emails which bounced repeatedly
+  - `blocked`: The number of emails which were [suppressed][4] by SendGrid
+  - `spam_drop`: The number of emails which SendGrid dropped as spam
+  - `clicks`: The number of clicks on links in your emails
+  - `unique_clicks`: The number of users who clicked on a link in your email
   - `opens`: The number of users who opened your email
+  -  `unique_opens`: The number of users who opened your email
   - `spamreports`: The number of users who have reported your emails as spam
-
-`stats` may also contain some keys that Sendgrid does not officially document, such as: `delivered`, `invalid_email`, `repeat_bounces`,`+repeat_spamreports`, `repeat_unsubscribes` and `unsubscribes`
+  - `unsubscribes`: The number of unsubscribes your messages have received (if you are using the [subscription tracking app][3]
+  - `repeat_unsubscribes`: The number of repeat unsubscribes (if a user unsubscribed, resubscribed and then unsubscribed again)
+  - `bounces`: The number of emails that bounced
 
 - - -
 
@@ -415,3 +422,5 @@ Running "spec spec" out of the box will run the standard suite of tests (all net
 
 [1]: http://github.com/jamesBrennan
 [2]: http://wiki.sendgrid.com/doku.php?id=web_api
+[3]: http://sendgrid.com/docs/Apps/subscription_tracking.html
+[4]: https://sendgrid.zendesk.com/hc/en-us/articles/200181728-My-emails-are-being-dropped-
