@@ -15,8 +15,8 @@ describe SendgridToolkit do
     backup_env
 
     # Don't let SendgridToolkit fall back to SMTP_USERNAME and SMTP_PASSWORD
-    ENV['SMTP_USERNAME'] = ENV['TEST_SMTP_USERNAME'].nil? ? "fakeuser" : ENV['TEST_SMTP_USERNAME']
-    ENV['SMTP_PASSWORD'] = ENV['TEST_SMTP_PASSWORD'].nil? ? "fakepass" : ENV['TEST_SMTP_PASSWORD']
+    ENV['SMTP_USERNAME'] = ENV['TEST_SMTP_USERNAME'] || "fakeuser"
+    ENV['SMTP_PASSWORD'] = ENV['TEST_SMTP_PASSWORD'] || "fakepass"
   end
 
   after do
@@ -51,7 +51,7 @@ describe SendgridToolkit do
       end
     end
   end
-  
+
   describe "unsubscribes i/o" do
     before do
       @obj = SendgridToolkit::Unsubscribes.new

@@ -19,12 +19,7 @@ module SendgridToolkit
   BASE_URI = "api.sendgrid.com/api"
 
   class << self
-    def api_user=(v); @api_user = v; end
-    def api_user; @api_user; end
-
-    def api_key=(v); @api_key = v; end
-    def api_key; @api_key; end
-
+    attr_accessor :api_user, :api_key
     attr_writer :base_uri
     def base_uri
       @base_uri || ENV['SENDGRID_API_BASE_URI'] || BASE_URI
