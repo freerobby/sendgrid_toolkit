@@ -397,7 +397,7 @@ If authentication fails during an API request, SendgridToolkit throws `Authentic
 In Case You're Curious...
 -------------------------
 
-API requests are made and responses are received in JSON. All requests are made as POSTs unless noted otherwise (Sendgrid's examples are via GET, but they support POST)
+API requests are made and responses are received in JSON. All requests are made as POSTs unless noted otherwise (some of Sendgrid's examples are via GET, but they support POST)
 
 Each class takes a final options parameter in the form of a hash. You may use this parameter to pass additional options to the Sendgrid API. For example, let's say you are using the unsubscribes function:
 
@@ -421,6 +421,6 @@ In addition to unit tests, SendgridToolkit comes with a limited suite of "webcon
 Running "spec spec" out of the box will run the standard suite of tests (all network access is stubbed out).
 
 [1]: http://github.com/jamesBrennan
-[2]: http://wiki.sendgrid.com/doku.php?id=web_api
+[2]: http://sendgrid.com/docs/API_Reference/Web_API/
 [3]: http://sendgrid.com/docs/Apps/subscription_tracking.html
 [4]: https://sendgrid.zendesk.com/hc/en-us/articles/200181728-My-emails-are-being-dropped-
