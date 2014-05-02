@@ -215,6 +215,15 @@ Add email:
 ```ruby
 response = list_emails_obj.add :list => 'some_list_name', :data => { :email => 'some_new_email@example.com', :name => 'some_new_person'}
 ```
+
+Add multiple emails:
+
+This is limited to 1,000 entries by the API
+
+```ruby
+response = list_emails_obj.add :list => 'some_list_name', :data => [{ :email => 'some_new_email1@example.com', :name => 'some_new_person1'}, { :email => 'some_new_email2@example.com', :name => 'some_new_person2'}, { :email => 'some_new_email3@example.com', :name => 'some_new_person3'}]
+```
+
 `response` will be a hash containing a `inserted` key, which contains the number of emails inserted into the list.
 
 - - -
