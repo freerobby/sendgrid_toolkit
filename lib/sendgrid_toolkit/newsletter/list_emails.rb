@@ -5,6 +5,8 @@ module SendgridToolkit
     def add(options = {})
       if options[:data].kind_of?(Hash)
         options[:data] = options[:data].to_json
+      elsif options[:data].kind_of?(Array)
+        options[:data] = options[:data].map{|data| data.to_json}
       end
 
       api_post('email', 'add', options).parsed_response
