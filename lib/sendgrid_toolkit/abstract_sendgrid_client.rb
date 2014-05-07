@@ -27,7 +27,8 @@ module SendgridToolkit
     end
     
     def marketing_request(module_name, action_name, opts={})
-      response = HTTParty.post("https://#{BASE_URI_FOR_MARKETING}/#{module_name}/#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
+      action_name = module_name.to_s + "/#{action_name}" if module_name
+      response = HTTParty.post("https://#{BASE_URI_FOR_MARKETING}/#{action_name}.json?", :query => get_credentials.merge(opts), :format => :json)
       parse_response(response)
     end
 

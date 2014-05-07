@@ -17,7 +17,7 @@ SendgridToolkit provides a class for interacting with each of the following Send
   - Statistics
   - Unsubscribes
 
-SendgridToolkit also provides a class for interacting with eachof the following Sendgrid Marketing Email API modules:
+SendgridToolkit also provides a class for interacting with each of the following Sendgrid Marketing Email API modules:
   - Categories
   - Lists
   - Recipients

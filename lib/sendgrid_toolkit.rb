@@ -1,6 +1,6 @@
 require 'httparty'
 
-require 'abstract_sendgrid_client'
+require 'sendgrid_toolkit/abstract_sendgrid_client'
 require 'sendgrid_toolkit/common'
 require 'sendgrid_toolkit/sendgrid_error'
 require 'sendgrid_toolkit/statistics'
@@ -13,10 +13,12 @@ require 'sendgrid_toolkit/mail'
 require 'sendgrid_toolkit/category'
 require 'sendgrid_toolkit/recipients'
 require 'sendgrid_toolkit/lists'
+require 'sendgrid_toolkit/marketing_email'
 
 module SendgridToolkit
   BASE_URI = "sendgrid.com/api"
   BASE_URI_FOR_MARKETING = "sendgrid.com/api/newsletter"
+  MARKETING_EMAIL_OPTIONS = ['category', 'recipients', 'lists']
   
   class << self
     def api_user=(v); @api_user = v; end
