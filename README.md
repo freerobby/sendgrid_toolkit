@@ -432,7 +432,7 @@ In addition to unit tests, SendgridToolkit comes with a limited suite of "webcon
   1. Create a test account with SendGrid and store the credentials in `TEST_SMTP_USERNAME` and `TEST_SMTP_PASSWORD` environment variables. This is so that actions are performed on a test account and not your real SendGrid account. If you forget, don't worry -- the tests will fail but they will **not** fall back on the account that uses `SMTP_USERNAME` and `SMTP_PASSWORD`.
   2. Change "xit" it "it" on the tests you wish to run.
 
-Running "spec spec" out of the box will run the standard suite of tests (all network access is stubbed out).
+Running `rspec` out of the box will run the standard suite of tests (all network access is stubbed out).
 
 [1]: http://github.com/jamesBrennan
 [2]: http://sendgrid.com/docs/API_Reference/Web_API/

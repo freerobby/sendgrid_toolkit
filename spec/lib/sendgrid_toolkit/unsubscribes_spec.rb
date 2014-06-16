@@ -5,10 +5,10 @@ describe SendgridToolkit::Unsubscribes do
     FakeWeb.clean_registry
     @obj = SendgridToolkit::Unsubscribes.new("fakeuser", "fakepass")
   end
-  
+
   describe "#retrieve" do
     it "returns array of unsubscribed email addresses" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.get\.json\?|, :body => '[{"email":"user@domain.com"},{"email":"user2@domain2.com"},{"email":"user3@domain2.com"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.get\.json|, :body => '[{"email":"user@domain.com"},{"email":"user2@domain2.com"},{"email":"user3@domain2.com"}]')
       emails = @obj.retrieve
       emails[0]['email'].should == "user@domain.com"
       emails[1]['email'].should == "user2@domain2.com"
@@ -17,7 +17,7 @@ describe SendgridToolkit::Unsubscribes do
   end
   describe "#retrieve_with_timestamps" do
     it "parses timestamps" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.get\.json\?.*date=1|, :body => '[{"email":"user@domain.com","created":"2010-03-03 11:00:00"},{"email":"user2@domain2.com","created":"2010-03-04 21:00:00"},{"email":"user3@domain2.com","created":"2010-03-05 23:00:00"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.get\.json|, :body => '[{"email":"user@domain.com","created":"2010-03-03 11:00:00"},{"email":"user2@domain2.com","created":"2010-03-04 21:00:00"},{"email":"user3@domain2.com","created":"2010-03-05 23:00:00"}]')
       emails = @obj.retrieve_with_timestamps
       0.upto(2) do |index|
         emails[index]['created'].kind_of?(Time).should == true
@@ -27,31 +27,31 @@ describe SendgridToolkit::Unsubscribes do
       emails[2]['created'].asctime.should == "Fri Mar  5 23:00:00 2010"
     end
   end
-  
+
   describe "#add" do
     it "raises no errors on success" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.add\.json\?.*email=.+|, :body => '{"message":"success"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.add\.json|, :body => '{"message":"success"}')
       lambda {
         @obj.add :email => "user@domain.com"
       }.should_not raise_error
     end
     it "raises error when email already exists" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.add\.json\?.*email=.+|, :body => '{"message":"Unsubscribe email address already exists"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.add\.json|, :body => '{"message":"Unsubscribe email address already exists"}')
       lambda {
         @obj.add :email => "user@domain.com"
       }.should raise_error SendgridToolkit::UnsubscribeEmailAlreadyExists
     end
   end
-  
+
   describe "#delete" do
     it "raises no errors on success" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.delete\.json\?.*email=.+|, :body => '{"message":"success"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.delete\.json|, :body => '{"message":"success"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should_not raise_error
     end
     it "raises error when email address does not exist" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/unsubscribes\.delete\.json|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should raise_error SendgridToolkit::UnsubscribeEmailDoesNotExist

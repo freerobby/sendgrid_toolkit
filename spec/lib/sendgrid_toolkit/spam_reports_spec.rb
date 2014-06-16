@@ -8,7 +8,7 @@ describe SendgridToolkit::SpamReports do
 
   describe "#retrieve" do
     it "returns array of bounced emails" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.get\.json\?|, :body => '[{"email":"email1@domain.com"},{"email":"email2@domain2.com"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.get\.json|, :body => '[{"email":"email1@domain.com"},{"email":"email2@domain2.com"}]')
       bounces = @obj.retrieve
       bounces[0]['email'].should == "email1@domain.com"
       bounces[1]['email'].should == "email2@domain2.com"
@@ -17,7 +17,7 @@ describe SendgridToolkit::SpamReports do
 
   describe "#retrieve_with_timestamps" do
     it "parses timestamps" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.get\.json\?.*date=1|, :body => '[{"email":"email1@domain.com","created":"2009-06-01 19:41:39"},{"email":"email2@domain2.com","created":"2009-06-12 19:41:39"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.get\.json|, :body => '[{"email":"email1@domain.com","created":"2009-06-01 19:41:39"},{"email":"email2@domain2.com","created":"2009-06-12 19:41:39"}]')
       bounces = @obj.retrieve_with_timestamps
       0.upto(1) do |index|
         bounces[index]['created'].kind_of?(Time).should == true
@@ -29,13 +29,13 @@ describe SendgridToolkit::SpamReports do
 
   describe "#delete" do
     it "raises no errors on success" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.delete\.json\?.*email=.+|, :body => '{"message":"success"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.delete\.json|, :body => '{"message":"success"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should_not raise_error
     end
     it "raises error when email address does not exist" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/spamreports\.delete\.json|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should raise_error SendgridToolkit::EmailDoesNotExist
