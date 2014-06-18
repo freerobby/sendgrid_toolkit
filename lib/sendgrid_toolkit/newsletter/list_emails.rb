@@ -24,6 +24,10 @@ module SendgridToolkit
       api_post('email', 'delete', options).parsed_response
     end
 
+    def count(options = {})
+      api_post('email', 'count', options).parsed_response
+    end
+
     protected
 
     def compose_base_path(module_name, action_name)
