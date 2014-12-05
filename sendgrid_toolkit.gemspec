@@ -68,18 +68,18 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<httparty>, [">= 0.7.6"])
       s.add_development_dependency(%q<fakeweb>, ["~> 1.3.0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, ["~> 2.7.0"])
+      s.add_development_dependency(%q<rspec>, ["~> 3.1.0"])
     else
       s.add_dependency(%q<httparty>, [">= 0.7.6"])
       s.add_dependency(%q<fakeweb>, ["~> 1.3.0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rspec>, ["~> 2.7.0"])
+      s.add_dependency(%q<rspec>, ["~> 3.1.0"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0.7.6"])
     s.add_dependency(%q<fakeweb>, ["~> 1.3.0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rspec>, ["~> 2.7.0"])
+    s.add_dependency(%q<rspec>, ["~> 3.1.0"])
   end
 end
 
