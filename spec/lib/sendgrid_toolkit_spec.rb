@@ -5,19 +5,19 @@ describe SendgridToolkit do
   describe ".base_uri" do
     it "returns value set by user" do
       subject.base_uri = "foo"
-      subject.base_uri.should == "foo"
+      expect(subject.base_uri).to eq("foo")
     end
 
     it "finds ENV variable" do
       subject.base_uri = nil
       ENV['SENDGRID_API_BASE_URI'] = "bar"
-      subject.base_uri.should == "bar"
+      expect(subject.base_uri).to eq("bar")
     end
 
     it "returns default value" do
       subject.base_uri = nil
       ENV['SENDGRID_API_BASE_URI'] = nil
-      subject.base_uri.should == subject::BASE_URI
+      expect(subject.base_uri).to eq(subject::BASE_URI)
     end
   end
 end

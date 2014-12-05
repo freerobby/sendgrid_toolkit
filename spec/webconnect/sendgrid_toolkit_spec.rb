@@ -26,9 +26,9 @@ describe SendgridToolkit do
   describe "abstract_sendgrid_client i/o" do
     xit "throws authentication error when authentication fails" do
       @obj = SendgridToolkit::AbstractSendgridClient.new("fakeuser", "fakepass")
-      lambda {
+      expect {
         @obj.send(:api_post, "profile", "get", {})
-      }.should raise_error SendgridToolkit::AuthenticationFailed
+      }.to raise_error SendgridToolkit::AuthenticationFailed
     end
   end
 
@@ -38,16 +38,16 @@ describe SendgridToolkit do
     end
     xit "retrieves statistics by day" do
       stats = @obj.retrieve
-      stats.count.should > 0
+      expect(stats.count).to be > 0
       day_stats = stats.first
       %w(date requests bounces clicks opens spamreports).each do |k|
-        day_stats.has_key?(k).should == true
+        expect(day_stats.has_key?(k)).to be_truthy
       end
     end
     xit "retrieves aggregate statistics" do
       stats = @obj.retrieve_aggregate
       %w(requests bounces clicks opens spamreports).each do |k|
-        stats.has_key?(k).should == true
+        expect(stats.has_key?(k)).to be_truthy
       end
     end
   end
@@ -65,11 +65,11 @@ describe SendgridToolkit do
       @obj.add :email => "user2@domain.com"
       unsubs = @obj.retrieve_with_timestamps
       emails = unsubs.map {|h| h['email']}
-      emails.include?('user@domain.com').should == true
-      emails.include?('user2@domain.com').should == true
+      expect(emails.include?('user@domain.com')).to be_truthy
+      expect(emails.include?('user2@domain.com')).to be_truthy
       @obj.delete :email => 'user@domain.com'
       @obj.delete :email => 'user2@domain.com'
-      @obj.retrieve.count.should == 0
+      expect(@obj.retrieve.count).to eq(0)
     end
   end
 end
