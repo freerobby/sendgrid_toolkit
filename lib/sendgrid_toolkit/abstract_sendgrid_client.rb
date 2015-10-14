@@ -17,7 +17,7 @@ module SendgridToolkit
                                :query => get_credentials.merge(opts),
                                :format => :json)
       if response.code > 401
-        raise(SendgridToolkit::SendgridServerError, "The sengrid server returned an error. #{response.inspect}")
+        raise(SendgridToolkit::SendgridServerError, "The SendGrid server returned an error. #{response.inspect}")
       elsif has_error?(response) and
           response['error'].respond_to?(:has_key?) and
           response['error'].has_key?('code') and
