@@ -2,8 +2,8 @@ require File.expand_path("#{File.dirname(__FILE__)}/../../../helper")
 
 describe SendgridToolkit::NewsletterSendgridClient do
   specify do
-    SendgridToolkit::NewsletterSendgridClient.
-      should be < SendgridToolkit::AbstractSendgridClient
+    expect(SendgridToolkit::NewsletterSendgridClient).
+      to be < SendgridToolkit::AbstractSendgridClient
   end
 
   describe '#api_post' do
@@ -18,7 +18,7 @@ describe SendgridToolkit::NewsletterSendgridClient do
 
       sendgrid_client = SendgridToolkit::NewsletterSendgridClient.new("fakeuser", "fakepass")
 
-      sendgrid_client.send(:api_post, "lists", "add", opts).should eql({ 'message' => 'success' })
+      expect(sendgrid_client.send(:api_post, "lists", "add", opts)).to eql({ 'message' => 'success' })
     end
   end
 end
