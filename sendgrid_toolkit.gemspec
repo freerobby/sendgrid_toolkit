@@ -40,6 +40,9 @@ Gem::Specification.new do |s|
     "lib/sendgrid_toolkit/spam_reports.rb",
     "lib/sendgrid_toolkit/statistics.rb",
     "lib/sendgrid_toolkit/unsubscribes.rb",
+    'lib/sendgrid_toolkit/v3/groups.rb',
+    'lib/sendgrid_toolkit/v3/unsubscribes.rb',
+    'lib/sendgrid_toolkit/v3/abstract_sendgrid_client.rb',
     "sendgrid_toolkit.gemspec",
     "spec/helper.rb",
     "spec/lib/sendgrid_toolkit/abstract_sendgrid_client_spec.rb",
@@ -53,7 +56,9 @@ Gem::Specification.new do |s|
     "spec/lib/sendgrid_toolkit/statistics_spec.rb",
     "spec/lib/sendgrid_toolkit/unsubscribes_spec.rb",
     "spec/lib/sendgrid_toolkit_spec.rb",
-    "spec/webconnect/sendgrid_toolkit_spec.rb"
+    "spec/webconnect/sendgrid_toolkit_spec.rb",
+    'spec/lib/sendgrid_toolkit/v3/abstract_sendgrid_client_spec.rb',
+    'spec/lib/sendgrid_toolkit/v3/unsubscribes_spec.rb'
   ]
   s.homepage = "http://github.com/freerobby/sendgrid_toolkit"
   s.licenses = ["MIT"]
@@ -82,4 +87,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rspec>, ["~> 2.7.0"])
   end
 end
-

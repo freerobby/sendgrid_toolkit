@@ -5,6 +5,7 @@ require 'rspec'
 FakeWeb.allow_net_connect = false
 
 REGEX_ESCAPED_BASE_URI = "api\.sendgrid\.com/api"
+REGEX_ESCAPED_BASE_URI_V3 = 'api.sendgrid.com/v3/asm'
 
 def backup_env
   @env_backup = Hash.new

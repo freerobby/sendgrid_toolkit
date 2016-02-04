@@ -8,4 +8,6 @@ module SendgridToolkit
   class EmailDoesNotExist < StandardError; end
   class SendgridServerError < StandardError; end
   class APIError < StandardError; end
+  class GroupsError < StandardError; end
+  class NoGroupIdSpecified < StandardError; end
 end
