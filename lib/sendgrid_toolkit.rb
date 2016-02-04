@@ -1,5 +1,4 @@
 require 'httparty'
-require 'pry'
 
 require 'sendgrid_toolkit/abstract_sendgrid_client'
 require 'sendgrid_toolkit/common'
