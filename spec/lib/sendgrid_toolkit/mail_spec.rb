@@ -13,5 +13,12 @@ describe SendgridToolkit::Mail do
         response = @obj.send_mail :from => "testing@fiverr.com", :subject => "Subject", :text => "Text", "x-smtpapi" => {:category => "Testing", :to => ["elad@fiverr.com"]}
       }.should raise_error SendgridToolkit::SendEmailError
     end
-  end  
+
+    it "posts x-smtpapi parameters as json" do
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/mail\.send\.json\?|, :body => '{"message":"success"}')
+      xsmtpapi = {:category => "Testing", :to => ["scottb@sendgrid.com"]}
+      response = @obj.send_mail :to => "scottb@sendgrid.com", :from => "testing@fiverr.com", :subject => "Subject", :text => "Text", "x-smtpapi" => xsmtpapi
+      response.request.options[:query]["x-smtpapi"].should == xsmtpapi.to_json
+    end
+  end
 end
