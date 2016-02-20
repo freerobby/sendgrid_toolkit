@@ -200,6 +200,14 @@ list_emails_obj = SendgridToolkit::ListEmails.new(api_user, api_key)
 ```
 - - -
 
+Count emails:
+```ruby
+count_hash = list_emails_obj.count :list => 'some_list_name'
+```
+`count` will be a hash, with one element whose key is 'count' and value is the number of subscribers on the specified list.
+
+- - -
+
 Get emails:
 ```ruby
 list_emails = list_emails_obj.get :list => 'some_list_name'
