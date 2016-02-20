@@ -8,7 +8,7 @@ describe SendgridToolkit::Bounces do
 
   describe "#retrieve" do
     it "returns array of bounced emails" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.get\.json\?|, :body => '[{"email":"email1@domain.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email1@domain.com"},{"email":"email2@domain2.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email2@domain2.com"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.get\.json|, :body => '[{"email":"email1@domain.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email1@domain.com"},{"email":"email2@domain2.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email2@domain2.com"}]')
       bounces = @obj.retrieve
       bounces[0]['email'].should == "email1@domain.com"
       bounces[0]['status'].should == "5.1.1"
@@ -18,7 +18,7 @@ describe SendgridToolkit::Bounces do
 
   describe "#retrieve_with_timestamps" do
     it "parses timestamps" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.get\.json\?.*date=1|, :body => '[{"email":"email1@domain.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email1@domain.com","created":"2009-06-01 19:41:39"},{"email":"email2@domain2.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email2@domain2.com","created":"2009-06-12 19:41:39"}]')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.get\.json|, :body => '[{"email":"email1@domain.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email1@domain.com","created":"2009-06-01 19:41:39"},{"email":"email2@domain2.com","status":"5.1.1","reason":"host [127.0.0.1] said: 550 5.1.1 unknown or illegal user: email2@domain2.com","created":"2009-06-12 19:41:39"}]')
       bounces = @obj.retrieve_with_timestamps
       0.upto(1) do |index|
         bounces[index]['created'].kind_of?(Time).should == true
@@ -30,19 +30,19 @@ describe SendgridToolkit::Bounces do
 
   describe "#delete" do
     it "raises no errors on success" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json\?.*email=.+|, :body => '{"message":"success"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json|, :body => '{"message":"success"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should_not raise_error
     end
     it "raises error when email address does not exist" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json\?.*email=.+|, :body => '{"message":"Email does not exist"}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json|, :body => '{"message":"Email does not exist"}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should raise_error SendgridToolkit::EmailDoesNotExist
     end
     it "does not choke if response does not have a 'message' field" do
-      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json\?.*email=.+|, :body => '{}')
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/bounces\.delete\.json|, :body => '{}')
       lambda {
         @obj.delete :email => "user@domain.com"
       }.should_not raise_error
