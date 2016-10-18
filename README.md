@@ -405,6 +405,24 @@ unsubscribes.delete :email => "email@that_is.unsubscribed"
 ```
 SendgridToolkit will throw `UnsubscribeEmailDoesNotExist` if the email you specified is not on the list
 
+Sendgrid Groups V3 (branch master for now)
+------------------------------------------
+Use groups 
+```ruby
+groups = SendgridToolkit::V3::Groups.new(SENDGRID_USERNAME, SENDGRID_PASSWORD)
+groups.get # get all groups
+groups.get(group_id) # get group by id
+
+groups.add(options = {}) 
+groups.delete(options = {})
+```
+
+Add emails to the groups (unsubscribes)
+```ruby
+unsubscribes = SendgridToolkit::V3::Unsubscribes.new(SENDGRID_USERNAME, SENDGRID_PASSWORD)
+unsubscribes.add(group_id: group_id, recipient_emails: [emails]) # add one / a few emails to the group
+unsubscribes.delete(group_id: group_id, email: email)
+```
 
 A note about authentication
 ---------------------------
