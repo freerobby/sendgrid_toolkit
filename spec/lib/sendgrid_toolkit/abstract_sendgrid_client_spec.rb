@@ -16,6 +16,13 @@ describe SendgridToolkit::AbstractSendgridClient do
         @obj.send(:api_post, "profile", "get", {})
       }.should raise_error SendgridToolkit::AuthenticationFailed
     end
+    it "throws error when bad username or password presented" do
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/stats\.getAdvanced\.json\?|, :body => '{"error":{"code":403,"message":"Bad username / password"}}', :status => ['403', 'Forbidden'])
+      @obj = SendgridToolkit::AbstractSendgridClient.new("fakeuser", "fakepass")
+      expect {
+        @obj.send(:api_post, "stats", "getAdvanced", {})
+      }.to raise_error SendgridToolkit::AuthenticationFailed
+    end
     it "thows error when sendgrid response is a server error" do
       FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/profile\.get\.json|, :body => '{}', :status => ['500', 'Internal Server Error'])
       @obj = SendgridToolkit::AbstractSendgridClient.new("someuser", "somepass")

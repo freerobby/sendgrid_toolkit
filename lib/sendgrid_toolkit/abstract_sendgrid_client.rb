@@ -16,12 +16,12 @@ module SendgridToolkit
       response = HTTParserParty.post("https://#{SendgridToolkit.base_uri}/#{base_path}.json",
                                :body => get_credentials.merge(opts),
                                :format => :json)
-      if response.code > 401
+      if response.code > 403
         raise(SendgridToolkit::SendgridServerError, "The SendGrid server returned an error. #{response.inspect}")
-      elsif has_error?(response) and
-          response['error'].respond_to?(:has_key?) and
-          response['error'].has_key?('code') and
-          response['error']['code'].to_i == 401
+      elsif has_error?(response) &&
+          response['error'].respond_to?(:has_key?) &&
+          response['error'].has_key?('code') &&
+          [401, 403].include?(response['error']['code'].to_i)
         raise SendgridToolkit::AuthenticationFailed
       elsif has_error?(response)
         raise(SendgridToolkit::APIError, response['error'])
