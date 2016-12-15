@@ -23,6 +23,13 @@ describe SendgridToolkit::V3::AbstractSendgridClient do
         @obj.send(:api_post, "profile", "get", {})
       }.should raise_error SendgridToolkit::AuthenticationFailed
     end
+    it "handles unexpected error responses gracefully" do
+      FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI}/profile\.get\.json|, :body => '<html>Html formatted error</html>', :status => ['500', 'Internal Server Error'])
+      @obj = SendgridToolkit::AbstractSendgridClient.new("someuser", "somepass")
+      lambda {
+        @obj.send(:api_post, "profile", "get", {})
+      }.should raise_error SendgridToolkit::SendgridServerError, /<html>Html formatted error<\/html> - SendgridToolkit warning/
+    end
     it "thows error when sendgrid response is an API error" do
       FakeWeb.register_uri(:post, %r|https://#{REGEX_ESCAPED_BASE_URI_V3}/stats\.get\.json\?|, :body => '{"error": "error in end_date: end date is in the future"}', :status => ['400', 'Bad Request'])
       @obj = SendgridToolkit::AbstractSendgridClient.new("someuser", "somepass")

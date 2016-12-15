@@ -13,7 +13,7 @@ module SendgridToolkit
 
     def api_post(module_name, action_name, opts = {})
       base_path = compose_base_path(module_name, action_name)
-      response = HTTParty.post("https://#{SendgridToolkit.base_uri}/#{base_path}.json",
+      response = HTTParserParty.post("https://#{SendgridToolkit.base_uri}/#{base_path}.json",
                                :body => get_credentials.merge(opts),
                                :format => :json)
       if response.code > 401
