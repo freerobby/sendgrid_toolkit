@@ -1,6 +1,7 @@
 require 'httparty'
 
 require 'sendgrid_toolkit/abstract_sendgrid_client'
+require 'sendgrid_toolkit/http_parser_party'
 require 'sendgrid_toolkit/common'
 require 'sendgrid_toolkit/sendgrid_error'
 require 'sendgrid_toolkit/statistics'
